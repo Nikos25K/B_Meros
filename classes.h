@@ -61,17 +61,22 @@ class Secretary{
 };
 
 class Student: public Person{
+    private:
 	int AM;
 	float ECTS;
+
 	public:
 		Student();
-		Student(const int am, const float ects, const string in_name, const string mail, const int in_age, const vector<string> in_subjects) :Person(in_name, mail, in_age, vector<string> in_subjects);
-		~Student();
+		Student(const int am, const float ects, const string in_name, const string mail, const int in_age, const vector<string> in_subjects) 
+        :Person(in_name, mail, in_age, vector<string> in_subjects);
 		Student(const Student& student);
-		void set_AM(int am);
-		int get_AM() const;
-		void set_ECTS(ects);
+        ~Student();
+		
 		float get_ECTS() const;
+		int get_AM() const;
+
+		void set_AM(int am);
+		void set_ECTS(ects);
 };
 
 class Professor{
