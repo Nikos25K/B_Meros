@@ -76,7 +76,7 @@ class Student: public Person{
 		int get_AM() const;
 
 		void set_AM(int am);
-		void set_ECTS(ects);
+		void set_ECTS(float ects);
 };
 
 class Professor{
