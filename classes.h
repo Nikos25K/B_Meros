@@ -4,6 +4,8 @@
 
 using namespace std;
 
+class Course;
+
 class Person{
     protected:
         string name;
@@ -11,14 +13,14 @@ class Person{
         string mail;
         int age;
         vector<string> subjects;    //subjects that teaches or studies
-        
+
     public:
         Person();
         Person(const Person *ptr);
         Person(const string in_name, const string in_surname, const string mail ,const int in_age, const vector<string> in_subjects);
         Person(const Person& person);
         ~Person();
-        
+
         static int count;
 
         string get_name() const;
