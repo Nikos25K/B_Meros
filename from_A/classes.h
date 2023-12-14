@@ -59,3 +59,25 @@ class Secretary{
         bool find(const Person person);                 //find based on different args
         bool find(const Person* person);
 };
+
+class Student: public Person{
+	int AM;
+	float ECTS;
+	public:
+		Student();
+		Student(const int am, const float ects, const string in_name, const string mail, const int in_age, const vector<string> in_subjects) :Person(in_name, mail, in_age, vector<string> in_subjects);
+		~Student();
+		Student(const Student& student);
+		void set_AM(int am);
+		int get_AM() const;
+		void set_ECTS(ects);
+		float get_ECTS() const;
+};
+
+class Professor{
+	
+};
+
+class Course{
+	
+};
