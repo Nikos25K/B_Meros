@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/nikos25k/C++/B_Meros/B/includes",
-      "program": "/home/nikos25k/C++/B_Meros/B/includes/build/Debug/outDebug",
+      "cwd": "/home/nikos25k/C++/B_Meros",
+      "program": "/home/nikos25k/C++/B_Meros/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
