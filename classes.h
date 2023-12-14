@@ -63,26 +63,45 @@ class Secretary{
 class Student: public Person{
     private:
 	int AM;
-	float ECTS;
+	int ECTS;
 
 	public:
 		Student();
-		Student(const int am, const float ects, const string in_name, const string in_surname,
+		Student(const int am, const int ects, const string in_name, const string in_surname,
         const string mail, const int in_age, const vector<string> in_subjects);
 		Student(const Student& student);
         ~Student();
 		
-		float get_ECTS() const;
+		int get_ECTS() const;
 		int get_AM() const;
 
 		void set_AM(int am);
-		void set_ECTS(float ects);
+		void set_ECTS(int ects);
 };
 
-class Professor{
+class Professor: public Person{
 	
+    public:
+        Professor();
 };
 
 class Course{
-	
+	private:
+        int ECTS;
+        bool mandatory;
+        int semester;
+
+    public:
+        Course();
+        Course(const int ects, bool mand, const int sem);
+        Course(const Course& course);
+        ~Course();
+
+        int get_ECTS() const;
+        bool is_mandatory() const;
+        int get_semester() const;
+
+        void set_ECTS(int ects);
+        void set_mandatory(bool value);
+        void set_semester(int sem);
 };
