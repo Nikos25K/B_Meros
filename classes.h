@@ -83,6 +83,8 @@ class Professor: public Person{
 	
     public:
         Professor();
+        Professor(const Professor& professor);
+        ~Professor();
 };
 
 class Course{
