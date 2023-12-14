@@ -64,6 +64,8 @@ class Student: public Person{
     private:
 	int AM;
 	int ECTS;
+    int semester;
+    //map apo mathimata
 
 	public:
 		Student();
@@ -74,13 +76,18 @@ class Student: public Person{
 		
 		int get_ECTS() const;
 		int get_AM() const;
+        int get_sem() const;
 
-		void set_AM(int am);
 		void set_ECTS(int ects);
+		void set_AM(int am);            //isos fygei
+        void set_sem(void);     //++
+        // or friend function that sets sem++
 };
 
 class Professor: public Person{
-	
+	private:
+        vector<Course*> cources;
+
     public:
         Professor();
         Professor(const Professor& professor);
@@ -92,6 +99,10 @@ class Course{
         int ECTS;
         bool mandatory;
         int semester;
+        vector<Professor*> profs;
+        //arithmo poy perasan
+        //arithmo pou kophkan
+        //na prosthetoume ton vathmo
 
     public:
         Course();
