@@ -67,8 +67,8 @@ class Student: public Person{
 
 	public:
 		Student();
-		Student(const int am, const float ects, const string in_name, const string mail, const int in_age, const vector<string> in_subjects) 
-        :Person(in_name, mail, in_age, vector<string> in_subjects);
+		Student(const int am, const float ects, const string in_name, const string in_surname,
+        const string mail, const int in_age, const vector<string> in_subjects);
 		Student(const Student& student);
         ~Student();
 		
