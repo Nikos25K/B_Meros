@@ -4,13 +4,13 @@ Student::Student() : Person("","","",0), AM(0), ECTS(0){}
 
 //basic constructor
 Student::Student(const int am, const int ects, const string in_name, const string in_surname,
-const string in_mail, const int in_age):
+const string in_mail, const int in_age, const int map<Course*, int> in_subjects):
 Person(in_name, in_surname, in_mail, in_age),
-AM(am), ECTS(ects) {}
+AM(am), ECTS(ects), subjects(in_subjects) {}
 
 //copy contructor
 Student::Student(const Student& student):
-Person(student), AM(student.AM), ECTS(student.ECTS) {}
+Person(student), AM(student.AM), ECTS(student.ECTS), subjects(student.subjects) {}
 
 Student::~Student(){}
 

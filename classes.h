@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -66,11 +67,13 @@ class Student: public Person{
 	int ECTS;
     int semester;
     //map apo mathimata
+    map<Course*, int> subjects;
+
 
 	public:
 		Student();
 		Student(const int am, const int ects, const string in_name, const string in_surname,
-        const string mail, const int in_age);
+        const string mail, const int in_age, const int map<Course*, int>);
 		Student(const Student& student);
         ~Student();
 		
