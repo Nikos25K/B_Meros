@@ -19,7 +19,7 @@ class Person{
         Person(const Person *ptr);
         Person(const string in_name, const string in_surname, const string mail ,const int in_age);
         Person(const Person& person);
-        ~Person();
+        virtual ~Person();
 
         static int count;
 
@@ -72,8 +72,8 @@ class Student: public Person{
 
 	public:
 		Student();
-		Student(const int am, const int ects, const string in_name, const string in_surname,
-        const string mail, const int in_age);
+		Student(const string in_name, const string in_surname, const string mail, 
+        const int in_age, const int am, const int ects);
 		Student(const Student& student);
         ~Student();
 		
@@ -89,11 +89,18 @@ class Student: public Person{
 
 class Professor: public Person{
 	private:
-        vector<Course*> cources;
+        vector<Course*> courses;
 
     public:
         Professor();
+        Professor(const string in_name, const string in_surname, const string in_mail,
+        const int in_age, const vector<Course*> in_courses);
+        Professor(const Professor& prof);
         ~Professor();
+
+        vector<Course*> get_courses() const;
+
+        Professor& operator+=(const Course* course);
 };
 
 class Course{
@@ -138,14 +145,14 @@ class Course{
 
 class Semester{
     private:
-        vector<Course*> cources;
+        vector<Course*> courses;
 
     public:
         Semester();
         Semester(const vector<Course*> courses);
         ~Semester();
 
-        vector<Course*> get_cources() const;
+        vector<Course*> get_courses() const;
 
         Semester& operator+=(const Course* course);
 };

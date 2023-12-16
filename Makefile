@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -g -std=c++11 -Wall
 
 # Source files
-SRCS = main.cpp person.cpp secretary.cpp student.cpp course.cpp
+SRCS = main.cpp person.cpp secretary.cpp student.cpp course.cpp professor.cpp semester.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)

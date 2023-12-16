@@ -1,15 +1,16 @@
 #include "classes.h"
 
-Semester::Semester(): cources({}) {}
+Semester::Semester(): courses({}) {}
 
-Semester::Semester(const vector<Course*> courses): cources(cources) {}
+Semester::Semester(const vector<Course*> courses): courses(courses) {}
 
 Semester::~Semester() {}
 
-vector<Course*> Semester::get_cources() const{
-    return cources;
+vector<Course*> Semester::get_courses() const{
+    return courses;
 }
 
 Semester& Semester::operator+=(const Course* course){
-    cources.push_back(new Cource(*cource))
+    courses.push_back(new Course(*course));
+    return *this;
 }
