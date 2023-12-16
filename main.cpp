@@ -4,8 +4,9 @@
 
 int main(){
     //cout<<"Geia sou kouklaki\n";
-    int choice;
-    string x, n, s;
+    int choice, sem;
+    string x, n, s, c;
+    char answer;
     do{
         cout<<"Choices:"<<endl;
         cout<<"1. Add, edit or delete a professor"<<endl;
@@ -40,6 +41,51 @@ int main(){
             cin>>x;
             cout<<"Which course you want to "<<x<<"?"<<endl;
             cin>>n;
+        }
+        else if (choice == 4){
+            cout<<"Which course's professors you want to define?"<<endl;
+            cin>>c;
+            do{
+                cout<<"Give professor's name"<<endl;
+                cin>>n;
+                cout<<"Give professor's surname"<<endl;
+                cin>>s;
+                cout<<"Do you want to define another professor? (Y/N)"<<endl;
+                cin>>answer;
+            }while (answer == 'Y' || answer == 'y');
+        }
+        else if (choice == 5){
+            cout<<"Give the course"<<endl;
+            cin>>c;
+            cout<<"Give the student's name"<<endl;
+            cin>>n;
+            cout<<"Give the student's surname"<<endl;
+            cin>>s;
+        }
+        else if (choice == 6){
+            cout<<"Give the course"<<endl;
+            cin>>c;
+            cout<<"Give the semester"<<endl;
+            cin>>sem;
+        }
+        else if (choice == 7){
+            cout<<"Give the semester"<<endl;
+            cin>>sem;
+            cout<<"Give professor's name"<<endl;
+            cin>>n;
+            cout<<"Give professor's surname"<<endl;
+            cin>>s;
+        }
+        else if (choice == 8){
+            cout<<"Give the semester"<<endl;
+            cin>>sem;
+            cout<<"Give the student's name"<<endl;
+            cin>>n;
+            cout<<"Give the student's surname"<<endl;
+            cin>>s;
+        }
+        else if (choice == 9){
+            cout<<"The students who can graduate are the following:"<<endl;
         }
     }while (choice != 10);
     return 0;
