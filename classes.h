@@ -12,12 +12,11 @@ class Person{
         string surname;
         string mail;
         int age;
-        vector<string> subjects;    //subjects that teaches or studies
 
     public:
         Person();
         Person(const Person *ptr);
-        Person(const string in_name, const string in_surname, const string mail ,const int in_age, const vector<string> in_subjects);
+        Person(const string in_name, const string in_surname, const string mail ,const int in_age);
         Person(const Person& person);
         ~Person();
 
@@ -27,7 +26,6 @@ class Person{
         string get_surname() const;
         string get_mail() const;
         int get_age() const;
-        vector<string> get_subjects() const;
 
         friend ostream &operator<<(ostream &left, const Person person);
         friend istream &operator>>(istream &in, Person &person);
@@ -72,7 +70,7 @@ class Student: public Person{
 	public:
 		Student();
 		Student(const int am, const int ects, const string in_name, const string in_surname,
-        const string mail, const int in_age, const vector<string> in_subjects);
+        const string mail, const int in_age);
 		Student(const Student& student);
         ~Student();
 		

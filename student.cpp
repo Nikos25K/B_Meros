@@ -1,11 +1,11 @@
 #include "classes.h"
 
-Student::Student() : Person("","","",0,{}), AM(0), ECTS(0){}
+Student::Student() : Person("","","",0), AM(0), ECTS(0){}
 
 //basic constructor
 Student::Student(const int am, const int ects, const string in_name, const string in_surname,
-const string in_mail, const int in_age, const vector<string> in_subjects):
-Person(in_name, in_surname, in_mail, in_age, in_subjects),
+const string in_mail, const int in_age):
+Person(in_name, in_surname, in_mail, in_age),
 AM(am), ECTS(ects) {}
 
 //copy contructor
