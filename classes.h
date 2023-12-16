@@ -99,6 +99,7 @@ class Professor: public Person{
 
 class Course{
 	private:
+        string name;
         int ECTS;
         bool mandatory;
         int semester;
@@ -109,11 +110,12 @@ class Course{
 
     public:
         Course();
-        Course(const int ects, bool mand, const int sem);
+        Course(const int ects, bool mand, const int sem, const string name);
         Course(const Course& course);
         ~Course();
 
         int get_ECTS() const;
+        string get_name() const;
         bool is_mandatory() const;
         int get_semester() const;
 
