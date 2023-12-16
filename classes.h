@@ -73,7 +73,7 @@ class Student: public Person{
 	public:
 		Student();
 		Student(const int am, const int ects, const string in_name, const string in_surname,
-        const string mail, const int in_age, const int map<Course*, int>);
+        const string mail, const int in_age);
 		Student(const Student& student);
         ~Student();
 		
@@ -110,7 +110,7 @@ class Course{
 
     public:
         Course();
-        Course(const int ects, bool mand, const int sem, const string name);
+        Course( const string name, const int ects, bool mand, const int sem);
         Course(const Course& course);
         ~Course();
 
@@ -119,6 +119,7 @@ class Course{
         bool is_mandatory() const;
         int get_semester() const;
 
+        void set_name(string nam);
         void set_ECTS(int ects);
         void set_mandatory(bool value);
         void set_semester(int sem);

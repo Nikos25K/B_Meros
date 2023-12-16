@@ -1,12 +1,12 @@
 #include "classes.h"
 
-Course::Course() : ECTS(0), mandatory(0), semester(0), name(""){}
+Course::Course(): name(""), ECTS(0), mandatory(0), semester(0){}
 
-Course::Course(const int ects, bool mand, const int sem, const string nam):
-ECTS(ects), mandatory(mand), semester(sem), name(nam){}
+Course::Course(const string nam, const int ects, bool mand, const int sem):
+ name(nam), ECTS(ects), mandatory(mand), semester(sem){}
 
 Course::Course(const Course& course): 
-ECTS(course.ECTS), mandatory(course.mandatory), semester(course.semester), name(course.name){}
+ name(course.name), ECTS(course.ECTS), mandatory(course.mandatory), semester(course.semester){}
 
 Course::~Course(){}
 
@@ -22,6 +22,10 @@ bool Course::is_mandatory() const{
 }
 int Course::get_semester() const{
     return semester;
+}
+
+void Course::set_name(string nam){
+    name = nam;
 }
 
 void Course::set_ECTS(int ects){
