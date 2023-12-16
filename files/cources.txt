@@ -1,0 +1,5 @@
+OOP 8 mandatory 3 Anastasia Lygizou Spyros Xergias
+ANAlysis_2 8 mandatory 3
+Artificial_Intelligence 6 non_mandatory 5
+Data_Structures 7 mandatory 2
+Cryptography 6 non_mandatory 8
