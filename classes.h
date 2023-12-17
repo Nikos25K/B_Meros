@@ -63,12 +63,11 @@ class Secretary{
 
 class Student: public Person{
     private:
-	int AM;
-	int ECTS;
-    int semester;
-    //map apo mathimata
-    map<Course*, int> subjects;
-
+        int AM;
+        int ECTS;
+        int semester;
+        //map apo mathimata
+        map<Course*, int> subjects;
 
 	public:
 		Student();
@@ -104,7 +103,7 @@ class Professor: public Person{
 };
 
 class Course{
-     private:
+    private:
         string name;
         int ECTS;
         bool mandatory;
