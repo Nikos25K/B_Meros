@@ -104,7 +104,7 @@ class Professor: public Person{
 };
 
 class Course{
-	private:
+     private:
         string name;
         int ECTS;
         bool mandatory;
