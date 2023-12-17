@@ -73,17 +73,17 @@ class Student: public Person{
 	public:
 		Student();
 		Student(const string in_name, const string in_surname, const string mail, 
-        const int in_age, const int am, const int ects);
+        const int in_age, const int am, const int ects, const int sem, const map<Course*, int> sub);
 		Student(const Student& student);
         ~Student();
 		
 		int get_ECTS() const;
 		int get_AM() const;
-        int get_sem() const;
+        int get_semester() const;
 
 		void set_ECTS(int ects);
 		void set_AM(int am);            //isos fygei
-        void set_sem(void);     //++
+        void set_semester(int sem);     //++
         // or friend function that sets sem++
 };
 
