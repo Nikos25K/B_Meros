@@ -1,11 +1,11 @@
 #include "classes.h"
 
-Student::Student() : Person("", "", "", 0), AM(0), ECTS(0), semester(0), subjects({}){}
+Student::Student() : Person("", "", "", 0, ""), AM(0), ECTS(0), semester(0), subjects({}){}
 
 //basic constructor
 Student::Student(const string in_name = " ", const string in_surname = " ", const string in_mail = " ", 
-const int in_age = 0, const int am = 0, const int ects = 0, const int sem = 0, const map<Course*, int> sub = {}):
-Person(in_name, in_surname, in_mail, in_age),
+const int in_age = 0, const string in_type = " ", const int am = 0, const int ects = 0, const int sem = 0, const map<Course*, int> sub = {}):
+Person(in_name, in_surname, in_mail, in_age, in_type),
 AM(am), ECTS(ects), semester(sem), subjects(sub){}
 
 //copy contructor
