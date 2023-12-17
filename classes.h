@@ -111,13 +111,13 @@ class Course{
         int semester;
         vector<Person*> people;     //both students and profs
         int passed;
-        int kophkan;
+        int failed;
         //na prosthetoume ton vathmo
 
     public:
         Course();
         Course(const string name, const int ects, bool mand, const int sem,
-        const vector<Person*> in_people, const int in_passed, const int in_kophkan);
+        const vector<Person*> in_people, const int in_passed, const int in_failed);
         Course(const Course *ptr);
         ~Course();
 
@@ -127,17 +127,16 @@ class Course{
         int get_semester() const;
         vector<Person*> get_people() const;
         int get_passed() const;
-        int get_kophkan() const;
+        int get_failed() const;
 
         void set_name(string nam);
         void set_ECTS(int ects);
         void set_mandatory(bool value);
         void set_semester(int sem);
-
         void set_professors(vector<Professor*> in_profs);
 
         void incr_passed();
-        void incr_kophkan();
+        void incr_failed();
 
         Course& operator+=(const Student* in_student);
         Course& operator+=(const Professor* prof);
