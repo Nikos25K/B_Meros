@@ -88,9 +88,24 @@ int main(){
     //         cin>>s;
     //     }
     //     else if (choice == 9){
-    //         cout<<"The students who can graduate are the following:"<<endl;
+    //          cout<<"The students who can graduate are the following:"<<endl;
+
+    //          void Course::set_professors(vector<Professor*> in_profs){
+    //          for(Professor* prof_ptr : in_profs)
+    //              people.push_back(prof_ptr);
+    //          }
+
+    //     for(Person* per : sec.data)
+    //         if (per->type == "student"){
+    //             if (per->semester >= 8){
+    //                 bool flag = 0;
+    //             }
+    //         }  
+
     //     }
     // }while (choice != 10);
+
+    Secretary sec;
 
     Course arch("arch",8,1,4, {},12,13);
 
@@ -99,7 +114,7 @@ int main(){
     vector<Course*> vec;
     vec.push_back(&arch);
 
-    Professor prof("Makis", "Dhmakis", "mail",34,vec);
+    Professor prof("Makis", "Dhmakis", "mail", 34, "professor", vec);
 
     cout<<vec[0]->get_ECTS()<<endl;
 
