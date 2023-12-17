@@ -13,11 +13,12 @@ class Person{
         string surname;
         string mail;
         int age;
+        string type;
 
     public:
         Person();
         Person(const Person *ptr);
-        Person(const string in_name, const string in_surname, const string mail ,const int in_age);
+        Person(const string in_name, const string in_surname, const string mail, const int in_age, const string in_type);
         Person(const Person& person);
         virtual ~Person();
 
@@ -27,6 +28,7 @@ class Person{
         string get_surname() const;
         string get_mail() const;
         int get_age() const;
+        string get_type() const;
 
         friend ostream &operator<<(ostream &left, const Person person);
         friend istream &operator>>(istream &in, Person &person);
@@ -72,7 +74,7 @@ class Student: public Person{
 	public:
 		Student();
 		Student(const string in_name, const string in_surname, const string mail, 
-        const int in_age, const int am, const int ects, const int sem, const map<Course*, int> sub);
+        const int in_age, const string in_type, const int am, const int ects, const int sem, const map<Course*, int> sub);
 		Student(const Student& student);
         ~Student();
 		
@@ -93,7 +95,7 @@ class Professor: public Person{
     public:
         Professor();
         Professor(const string in_name, const string in_surname, const string in_mail,
-        const int in_age, const vector<Course*> in_courses);
+        const int in_age, const string in_type, const vector<Course*> in_courses);
         Professor(const Professor& prof);
         ~Professor();
 
