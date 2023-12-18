@@ -4,8 +4,8 @@ Student::Student() : Person("", "", "", 0, ""), AM(0), ECTS(0), semester(0), sub
 
 //basic constructor
 Student::Student(const string in_name = " ", const string in_surname = " ", const string in_mail = " ", 
-const int in_age = 0, const bool in_type = false, const int am = 0, const int ects = 0, const int sem = 0, const map<Course*, double> sub = {}):
-Person(in_name, in_surname, in_mail, in_age, in_type),
+const int in_age = 0, const int am = 0, const int ects = 0, const int sem = 0, const map<Course*, double> sub = {}):
+Person(in_name, in_surname, in_mail, in_age, true),
 AM(am), ECTS(ects), semester(sem), subjects(sub){}
 
 //copy contructor
@@ -41,7 +41,7 @@ Student& Student::operator+=(Course* course){
 }
 
 Student& Student::operator-=(Course* course){
-    auto check = subjects.find(course);
+    auto check = subjects.find(course);             //add ECTS
     if (check != subjects.end()) 
         subjects.erase(check);
         
@@ -53,4 +53,19 @@ double& Student::operator[](Course* course){           //check if new???
         subjects[course] = 0.0;
     }
     return subjects[course];
+}
+
+bool Student::gets_degree() const{
+
+    if(ECTS < 240 || semester < 8)
+        return false;
+
+    for (auto it = subjects.begin(); it != subjects.end(); ++it) {
+        Course* course = it->first;
+        double grade = it->second;
+        if(course->is_mandatory() && grade < 5)
+            return false;
+    }
+
+    return true;
 }

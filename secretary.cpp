@@ -109,3 +109,17 @@ bool Secretary::find(const Person person){
 bool Secretary::find(const Person *person){
     return find((*person).get_name(), (*person).get_surname());
 }
+
+vector<Student*> Secretary::students_graduate() const{
+    vector<Student*> degreeee;
+    for(Person* person : data){
+        if(!person->get_type())     //skips professors
+            continue;
+        Student* student = dynamic_cast<Student*>(person); 
+        if(!student)
+            exit(1);
+        if(student->gets_degree())
+            degreeee.push_back(student);
+    }
+    return degreeee;
+}

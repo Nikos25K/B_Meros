@@ -7,6 +7,7 @@
 using namespace std;
 
 class Course;
+class Student;
 
 class Person{
     protected:
@@ -39,6 +40,8 @@ class Secretary{
     private:
         vector<Person*> data;
 
+        //vector<Semester*> sems;
+
     public:
         Secretary();
         Secretary(const vector<Person> in_vec);     //constructors based on vectors
@@ -62,6 +65,10 @@ class Secretary{
         bool find(const string in_name, const string in_surname);
         bool find(const Person person);                 //find based on different args
         bool find(const Person* person);
+
+        vector<Student*> students_graduate() const;
+
+        //-=Person SOSSS
 };
 
 class Student: public Person{
@@ -75,7 +82,7 @@ class Student: public Person{
 	public:
 		Student();
 		Student(const string in_name, const string in_surname, const string mail, 
-        const int in_age, const bool in_type, const int am, const int ects, const int sem, const map<Course*, double> sub);
+        const int in_age, const int am, const int ects, const int sem, const map<Course*, double> sub);
 		Student(const Student& student);
         ~Student();
 		
@@ -89,9 +96,9 @@ class Student: public Person{
 
         Student& operator+=(Course* course);
         Student& operator-=(Course* course);
-        // or friend function that sets sem++
-
         double& operator[](Course* course);
+
+        bool gets_degree() const;
 };
 
 class Professor: public Person{
@@ -101,7 +108,7 @@ class Professor: public Person{
     public:
         Professor();
         Professor(const string in_name, const string in_surname, const string in_mail,
-        const int in_age, const bool in_type, const vector<Course*> in_courses);
+        const int in_age, const vector<Course*> in_courses);
         Professor(const Professor& prof);
         ~Professor();
 
@@ -162,4 +169,6 @@ class Semester{
         vector<Course*> get_courses() const;
 
         Semester& operator+=(const Course* course);
+
+        //-= cpurse sosssssssssss
 };

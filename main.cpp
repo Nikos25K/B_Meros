@@ -95,8 +95,11 @@ int main(){
     //              people.push_back(prof_ptr);
     //          }
 
-    //     for(Person* per : sec.data)
-    //         if (per->type == "student"){
+
+        // vector<Person*> vec1 = sec.get_data();
+
+    //     for(Person* per : vec1)
+    //         if (per->get_type() == 1){
     //             if (per->semester >= 8){
     //                 bool flag = 0;
     //             }
@@ -114,10 +117,20 @@ int main(){
     vector<Course*> vec;
     vec.push_back(&arch);
 
-    Professor prof("Makis", "Dhmakis", "mail", 34, 0, vec);
+    Professor prof("Makis", "Dhmakis", "mail", 34, vec);
 
-    cout<<vec[0]->get_ECTS()<<endl;
-    cout<<prof.get_name()<<endl;
+    map<Course*, double> subjects;
+    subjects [&arch] = 9.3; 
+
+    Student lenia_kouklaki("Lenia", "Triantafyllia", "mail", 120, 133, 220, 3, subjects);
+    cout<<"Type"<<lenia_kouklaki.get_type()<<endl;
+
+    sec += prof;
+    sec += lenia_kouklaki;
+
+    prof += &arch;
+
+    cout<<sec;
 
     return 0;
 }
