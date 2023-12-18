@@ -1,2 +1,2 @@
-Triantafyllia Papadogianni mail@gmail.com 19
-Nikolaos Kyriakakos mail2@gmail.com 20
+Triantafyllia Papadogianni mail@gmail.com 19 2200133 239 3 Data_Structures 7 Applied_Maths 8
+Nikolaos Kyriakakos mail2@gmail.com 20  2200083 238 3 Data_Structures 8 Applied_Maths 7

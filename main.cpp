@@ -1,9 +1,7 @@
 #include "classes.h"
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
 
+
+#include <sstream>
 
 int main(){
     //cout<<"Geia sou kouklaki\n";
@@ -108,29 +106,76 @@ int main(){
     //     }
     // }while (choice != 10);
 
-    Secretary sec;
+    // Secretary sec;
 
-    Course arch("arch",8,1,4, {},12,13);
+    // Course arch("arch",8,1,4, {},12,13);
 
-    cout<<arch.is_mandatory()<<endl;
+    // cout<<arch.is_mandatory()<<endl;
 
-    vector<Course*> vec;
-    vec.push_back(&arch);
+    // vector<Course*> vec;
+    // vec.push_back(&arch);
 
-    Professor prof("Makis", "Dhmakis", "mail", 34, vec);
+    // Professor prof("Makis", "Dhmakis", "mail", 34, vec);
 
-    map<Course*, double> subjects;
-    subjects [&arch] = 9.3; 
+    // map<Course*, double> subjects;
+    // subjects [&arch] = 9.3; 
 
-    Student lenia_kouklaki("Lenia", "Triantafyllia", "mail", 120, 133, 220, 3, subjects);
-    cout<<"Type"<<lenia_kouklaki.get_type()<<endl;
+    // Student lenia_kouklaki("Lenia", "Triantafyllia", "mail", 120, 133, 220, 3, subjects);
+    // cout<<"Type"<<lenia_kouklaki.get_type()<<endl;
 
-    sec += prof;
-    sec += lenia_kouklaki;
+    // sec += prof;
+    // sec += lenia_kouklaki;
 
-    prof += &arch;
+    // prof += &arch;
 
-    cout<<sec;
+    // cout<<sec;
+
+    ifstream fin("files/students.txt");
+    if (!fin.is_open()) {
+        cerr << "Error: Could not open input file." << std::endl;
+        return 1;
+    }
+
+    string name;
+    string surname;
+    string mail;
+    int age;
+    //type
+    int am;
+    int ECTS;
+    int sem;
+    string course;
+    float grade;
+    map<string,float> mathimata;
+
+    // while(1){
+    //     fin>>name;
+    //     cout<<name<<endl;
+    //     if(!fin)
+    //         break;
+    //     fin>>surname>>mail>>age>>am>>ECTS>>sem;
+    //     while(fin>>course>>grade){
+    //         mathimata[course] = grade;
+    //         cout<<course<<" "<<grade<<endl;
+    //     }
+    // }
+
+    string line;
+    while(getline(fin, line)){
+        istringstream fin(line);
+        fin>>name;
+        cout<<name<<endl;   
+        fin>>surname>>mail>>age>>am>>ECTS>>sem; 
+        mathimata.clear();
+        while(fin>>course>>grade){
+            mathimata[course] = grade;
+            cout<<course<<" "<<grade<<endl;
+        }
+    }
+
+    fin.close();
+
+
 
     return 0;
 }
