@@ -124,20 +124,27 @@ vector<Student*> Secretary::students_graduate() const{
     return degreeee;
 }
 
-
-
-
 Secretary& Secretary::operator-=(const Person* person){
-
+    for (auto it = data.begin(); it != data.end(); ++it){
+        if (*it == person){
+            data.erase(it);
+        }
+    }
     return *this;
 }
 
 Secretary& Secretary::operator+=(const Course* course){
+    courses[course->get_semester()].push_back(new Course(*course));
     // sems[course->get_semester()] += course;
     return *this;
 }
 
 Secretary& Secretary::operator-=(const Course* course){
+    for (auto it = courses[course->get_semester()].begin(); it != courses[course->get_semester()].end(); ++it){
+        if (*it == course){
+            courses[course->get_semester()].erase(it);
+        }
+    }
     // sems[course->get_semester()] -= course;
     return *this;
 }
