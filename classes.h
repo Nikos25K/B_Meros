@@ -8,6 +8,7 @@ using namespace std;
 
 class Course;
 class Student;
+class Semester;
 
 class Person{
     protected:
@@ -39,8 +40,7 @@ class Person{
 class Secretary{
     private:
         vector<Person*> data;
-
-        //vector<Semester*> sems;
+        vector<vector<Course*>> courses;
 
     public:
         Secretary();
@@ -68,7 +68,13 @@ class Secretary{
 
         vector<Student*> students_graduate() const;
 
-        //-=Person SOSSS
+
+
+
+        Secretary& operator-=(const Person* person);
+
+        Secretary& operator+=(const Course* course);
+        Secretary& operator-=(const Course* course);
 };
 
 class Student: public Person{
@@ -155,20 +161,4 @@ class Course{
 
         Course& operator+=(const Student* in_student);
         Course& operator+=(const Professor* prof);
-};
-
-class Semester{
-    private:
-        vector<Course*> courses;
-
-    public:
-        Semester();
-        Semester(const vector<Course*> courses);
-        ~Semester();
-
-        vector<Course*> get_courses() const;
-
-        Semester& operator+=(const Course* course);
-
-        //-= cpurse sosssssssssss
 };

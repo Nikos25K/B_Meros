@@ -123,3 +123,21 @@ vector<Student*> Secretary::students_graduate() const{
     }
     return degreeee;
 }
+
+
+
+
+Secretary& Secretary::operator-=(const Person* person){
+
+    return *this;
+}
+
+Secretary& Secretary::operator+=(const Course* course){
+    // sems[course->get_semester()] += course;
+    return *this;
+}
+
+Secretary& Secretary::operator-=(const Course* course){
+    // sems[course->get_semester()] -= course;
+    return *this;
+}

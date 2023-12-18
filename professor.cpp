@@ -20,7 +20,7 @@ Professor& Professor::operator+=(Course* course){
 }
 
 Professor& Professor::operator-=(Course* course) {
-    auto check = std::find(courses.begin(), courses.end(), course);
+    auto check = find(courses.begin(), courses.end(), course);
     if (check != courses.end()) 
         courses.erase(check);
         
