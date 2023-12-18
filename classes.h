@@ -9,7 +9,6 @@ using namespace std;
 
 class Course;
 class Student;
-class Semester;
 
 class Person{
     protected:
@@ -68,9 +67,6 @@ class Secretary{
         bool find(const Person* person);
 
         vector<Student*> students_graduate() const;
-
-
-
 
         Secretary& operator-=(const Person* person);
 
