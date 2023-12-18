@@ -1,7 +1,18 @@
 #include "classes.h"
 
-
-#include <sstream>
+static inline int count_lines(string name){
+    ifstream fin(name);
+    if (!fin.is_open()) {
+        cerr << "Error: Could not open input file." << endl;
+        return 1;
+    }
+    int count=0;
+    string line;
+    while(getline(fin, line))       //counts lines of file
+        count++;
+    fin.close();
+    return count;
+}
 
 int main(){
     //cout<<"Geia sou kouklaki\n";
@@ -130,51 +141,60 @@ int main(){
 
     // cout<<sec;
 
+    int count = count_lines("files/students.txt");
+
     ifstream fin("files/students.txt");
     if (!fin.is_open()) {
-        cerr << "Error: Could not open input file." << std::endl;
+        cerr << "Error: Could not open input file." << endl;
         return 1;
     }
 
-    string name;
-    string surname;
-    string mail;
-    int age;
-    //type
-    int am;
-    int ECTS;
-    int sem;
-    string course;
+    string name, surname, mail, course, line;
+    int age, am, ECTS, sem;
     float grade;
+    //type
     map<string,float> mathimata;
 
-    // while(1){
-    //     fin>>name;
-    //     cout<<name<<endl;
-    //     if(!fin)
-    //         break;
-    //     fin>>surname>>mail>>age>>am>>ECTS>>sem;
-    //     while(fin>>course>>grade){
-    //         mathimata[course] = grade;
-    //         cout<<course<<" "<<grade<<endl;
-    //     }
-    // }
-
-    string line;
     while(getline(fin, line)){
         istringstream fin(line);
-        fin>>name;
-        cout<<name<<endl;   
-        fin>>surname>>mail>>age>>am>>ECTS>>sem; 
-        mathimata.clear();
-        while(fin>>course>>grade){
+        fin>>name>>surname>>mail>>age>>am>>ECTS>>sem;
+        mathimata.clear();      //sets for new student
+        while(fin>>course>>grade)
             mathimata[course] = grade;
-            cout<<course<<" "<<grade<<endl;
-        }
     }
 
     fin.close();
 
+    count = count_lines("files/professors.txt");
+
+    fin.open("files/professors.txt");
+    if (!fin.is_open()) {
+        cerr << "Error: Could not open input file." << endl;
+        return 1;
+    }
+    while(getline(fin, line)){
+        istringstream fin(line);
+        fin>>name>>surname>>mail>>age;
+    }
+    fin.close();
+
+    count = count_lines("files/courses.txt");
+
+    fin.open("files/courses.txt");
+    if (!fin.is_open()) {
+        cerr << "Error: Could not open input file." << endl;
+        return 1;
+    }
+    string check;       //mandatory course or not
+    while(getline(fin, line)){
+        istringstream fin(line);
+        fin>>name>>ECTS>>check>>sem;
+        if(check == "mandatory")
+            cout<<1111111<<endl;
+        else
+            cout<<000000<<endl;
+    }
+    fin.close();
 
 
     return 0;

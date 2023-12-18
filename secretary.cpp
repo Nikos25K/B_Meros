@@ -140,9 +140,10 @@ Secretary& Secretary::operator+=(const Course* course){
 }
 
 Secretary& Secretary::operator-=(const Course* course){
-    for (auto it = courses[course->get_semester()].begin(); it != courses[course->get_semester()].end(); ++it){
+    int semest = course->get_semester();
+    for (auto it = courses[semest].begin(); it != courses[semest].end(); ++it){
         if (*it == course){
-            courses[course->get_semester()].erase(it);
+            courses[semest].erase(it);
         }
     }
     // sems[course->get_semester()] -= course;
