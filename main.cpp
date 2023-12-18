@@ -114,9 +114,10 @@ int main(){
     vector<Course*> vec;
     vec.push_back(&arch);
 
-    Professor prof("Makis", "Dhmakis", "mail", 34, "professor", vec);
+    Professor prof("Makis", "Dhmakis", "mail", 34, 0, vec);
 
     cout<<vec[0]->get_ECTS()<<endl;
+    cout<<prof.get_name()<<endl;
 
     return 0;
 }

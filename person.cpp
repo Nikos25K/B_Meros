@@ -2,7 +2,7 @@
 
 int Person::count = 0;
 
-Person::Person() : name(""), surname(""), mail(""), age(0), type(""){
+Person::Person() : name(""), surname(""), mail(""), age(0), type(false){
     count++;
 }
 
@@ -14,7 +14,7 @@ age(ptr->get_age()), type(ptr->get_type()){
 
 //basic constructor
 Person::Person(const string in_name, const string in_surname, const string in_mail,
-const int in_age, const string in_type):
+const int in_age, const bool in_type):
 name(in_name), surname(in_surname), mail(in_mail), age(in_age), type(in_type){
     count++;
 }
@@ -46,7 +46,7 @@ int Person::get_age() const{
     return age;
 }
 
-string Person::get_type() const{
+bool Person::get_type() const{
     return type;
 }
 

@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
@@ -13,12 +14,12 @@ class Person{
         string surname;
         string mail;
         int age;
-        string type;
+        bool type;
 
     public:
         Person();
         Person(const Person *ptr);
-        Person(const string in_name, const string in_surname, const string mail, const int in_age, const string in_type);
+        Person(const string in_name, const string in_surname, const string mail, const int in_age, const bool in_type);
         Person(const Person& person);
         virtual ~Person();
 
@@ -28,7 +29,7 @@ class Person{
         string get_surname() const;
         string get_mail() const;
         int get_age() const;
-        string get_type() const;
+        bool get_type() const;
 
         friend ostream &operator<<(ostream &left, const Person person);
         friend istream &operator>>(istream &in, Person &person);
@@ -69,12 +70,12 @@ class Student: public Person{
         int ECTS;
         int semester;
         //map apo mathimata
-        map<Course*, int> subjects;
+        map<Course*, double> subjects;
 
 	public:
 		Student();
 		Student(const string in_name, const string in_surname, const string mail, 
-        const int in_age, const string in_type, const int am, const int ects, const int sem, const map<Course*, int> sub);
+        const int in_age, const bool in_type, const int am, const int ects, const int sem, const map<Course*, double> sub);
 		Student(const Student& student);
         ~Student();
 		
@@ -85,7 +86,12 @@ class Student: public Person{
 		void set_ECTS(int ects);
 		void set_AM(int am);            //isos fygei
         void set_semester(int sem);     //++
+
+        Student& operator+=(Course* course);
+        Student& operator-=(Course* course);
         // or friend function that sets sem++
+
+        double& operator[](Course* course);
 };
 
 class Professor: public Person{
@@ -95,13 +101,14 @@ class Professor: public Person{
     public:
         Professor();
         Professor(const string in_name, const string in_surname, const string in_mail,
-        const int in_age, const string in_type, const vector<Course*> in_courses);
+        const int in_age, const bool in_type, const vector<Course*> in_courses);
         Professor(const Professor& prof);
         ~Professor();
 
         vector<Course*> get_courses() const;
 
-        Professor& operator+=(const Course* course);
+        Professor& operator+=(Course* course);
+        Professor& operator-=(Course* course);
 };
 
 class Course{
