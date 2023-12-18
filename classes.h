@@ -63,9 +63,9 @@ class Secretary{
         friend ostream &operator<<(ostream &left, const Secretary &secretary);
         friend istream &operator>>(istream &in, Secretary &secretary);
 
-        bool find(const string in_name, const string in_surname);
-        bool find(const Person person);                 //find based on different args
-        bool find(const Person* person);
+        Person* find(const string in_name, const string in_surname);
+        Person* find(const Person person);                 //find based on different args
+        Person* find(const Person* person);
 
         vector<Student*> students_graduate() const;
 
@@ -73,6 +73,8 @@ class Secretary{
 
         Secretary& operator+=(const Course* course);
         Secretary& operator-=(const Course* course);
+
+        Course* find(const string in_name) const;
 };
 
 class Student: public Person{

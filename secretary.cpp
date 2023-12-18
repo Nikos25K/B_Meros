@@ -93,20 +93,20 @@ istream &operator>>(istream &str, Secretary &secretary){
 }
 
 //given a name and surname checks if inside
-bool Secretary::find(const string in_name, const string in_surname){
+Person* Secretary::find(const string in_name, const string in_surname){
     for(Person* person: data)
         if(in_name == person->get_name() && 
            in_surname == person->get_surname())
-            return true;
-    return false;
+            return person;
+    return NULL;
 }
 //given a Person
-bool Secretary::find(const Person person){
+Person* Secretary::find(const Person person){
     return find(person.get_name(), person.get_surname());
 }
 
 //given a Person*
-bool Secretary::find(const Person *person){
+Person* Secretary::find(const Person *person){
     return find((*person).get_name(), (*person).get_surname());
 }
 
@@ -148,4 +148,12 @@ Secretary& Secretary::operator-=(const Course* course){
     }
     // sems[course->get_semester()] -= course;
     return *this;
+}
+
+Course* Secretary::find(const string in_name) const{
+    for (const auto sem : courses)
+        for(Course* curr : sem)
+            if(in_name == curr->get_name())
+                return curr;
+    return NULL;
 }

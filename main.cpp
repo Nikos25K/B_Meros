@@ -1,11 +1,21 @@
 #include "classes.h"
+inline void check_lines(int count,int temp_count){
+    if(count != temp_count){
+        cerr << "Error: Something wrong with reading." << endl;
+        exit(1);
+    }
+}
+
+inline void check_open(ifstream& fin){
+    if (!fin.is_open()) {
+        cerr << "Error: Could not open input file." << endl;
+        exit(1);
+    }
+}
 
 static inline int count_lines(string name){
     ifstream fin(name);
-    if (!fin.is_open()) {
-        cerr << "Error: Could not open input file." << endl;
-        return 1;
-    }
+    check_open(fin);
     int count=0;
     string line;
     while(getline(fin, line))       //counts lines of file
@@ -135,14 +145,6 @@ int main(){
     //     }
     // }while (choice != 10);
 
-    // Secretary sec;
-
-    // Course arch("arch",8,1,4, {},12,13);
-
-    // cout<<arch.is_mandatory()<<endl;
-
-    // vector<Course*> vec;
-    // vec.push_back(&arch);
 
     // Professor prof("Makis", "Dhmakis", "mail", 34, vec);
 
@@ -159,60 +161,94 @@ int main(){
 
     // cout<<sec;
 
-    int count = count_lines("files/students.txt");
+    Secretary sec;
 
+    int count = count_lines("files/students.txt");
     ifstream fin("files/students.txt");
-    if (!fin.is_open()) {
-        cerr << "Error: Could not open input file." << endl;
-        return 1;
-    }
+    check_open(fin);
+
 
     string name, surname, mail, course, line;
-    int age, am, ECTS, sem;
+    int age, am, ECTS, sem, temp_count;
     float grade;
     //type
-    map<string,float> mathimata;
-
+    map<Course*,double> mathimata;
+    
+    temp_count=0;
+    vector<Person*> people;
     while(getline(fin, line)){
+        temp_count++;
         istringstream fin(line);
         fin>>name>>surname>>mail>>age>>am>>ECTS>>sem;
         mathimata.clear();      //sets for new student
-        while(fin>>course>>grade)
-            mathimata[course] = grade;
+        Course* tmp;
+        while(fin>>course>>grade){
+            tmp = sec.find(course);
+            mathimata[tmp] = grade;
+        }
+
+        Student* student = new Student(name,surname,mail,age,am,ECTS,sem,mathimata);
+        people.push_back(student);
+
     }
 
+        //na kano apodesmefsi
+
     fin.close();
+    check_lines(count,temp_count);
+
 
     count = count_lines("files/professors.txt");
-
     fin.open("files/professors.txt");
-    if (!fin.is_open()) {
-        cerr << "Error: Could not open input file." << endl;
-        return 1;
-    }
+    check_open(fin);
+    temp_count=0;
     while(getline(fin, line)){
+        temp_count++;
         istringstream fin(line);
         fin>>name>>surname>>mail>>age;
+        Course* tmp;
+        vector<Course*> tmp_courses;
+        while(fin>>course>>grade){
+            tmp = sec.find(course);     //finds course in sec
+            tmp_courses.push_back(tmp);
+        }
+        Professor* professor = new Professor(name,surname,mail,age,tmp_courses);
+        people.push_back(professor);
     }
-    fin.close();
+    fin.close();            //na kano apodesmefsi
+    check_lines(count,temp_count);
 
     count = count_lines("files/courses.txt");
-
     fin.open("files/courses.txt");
-    if (!fin.is_open()) {
-        cerr << "Error: Could not open input file." << endl;
-        return 1;
-    }
+    check_open(fin);
+    vector<Course*> courses;
+    temp_count=0;
     string check;       //mandatory course or not
     while(getline(fin, line)){
+        temp_count++;
         istringstream fin(line);
         fin>>name>>ECTS>>check>>sem;
+
+        string tmp_name,tmp_surname;
+        vector<Person*> tmp_people;
+        Person* tmp;
+        while(fin>>tmp_name>>tmp_surname){
+            tmp = sec.find(tmp_name,tmp_surname);   //finds Person in sec
+            tmp_people.push_back(tmp);
+        }
+        Course* course;
         if(check == "mandatory")
-            cout<<1111111<<endl;
+            course = new Course(name,ECTS,1,sem,tmp_people,0,0); 
         else
-            cout<<000000<<endl;
+            course = new Course(name,ECTS,0,sem,tmp_people,0,0);
+        courses.push_back(course);
+
     }
     fin.close();
+    check_lines(count,temp_count);
+
+    for(Course* cour: courses)
+        cout<<cour->get_name()<<endl;
 
 
     return 0;
