@@ -39,6 +39,24 @@ int main(){
     //         cin>>n;
     //         cout<<"What's the surname of the professor you want to "<<x<<"?"<<endl;
     //         cin>>s;
+    //         if (x == "add"){
+    //             cout<<"Give the professor's mail"<<endl;
+    //             cin>>in_mail;
+    //             cout<<"Give the professor's age"<<endl;
+    //             cin>>in_age;
+    //             vector<Course*> in_courses = {};
+    //             cout<<"Do you want to give a professor's course (Y/N)"<<endl;
+    //             cin>>answer;
+    //             while (answer == 'Y' || answer == 'y'){
+    //                 cout<<"Give the course"<<endl;
+    //                 cin>>c;
+    //
+    //                 cout<<"Do you want to give another course (Y/N)?"
+    //                 cin>>answer;
+    //             }
+    //             Professor prof(n, s, in_mail, in_age, in_courses);
+    //             sec += prof;
+    //         }
     //     }
     //     else if (choice == 2){
     //         cout<<"Do you want to add, edit or delete a student?"<<endl;
