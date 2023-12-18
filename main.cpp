@@ -60,7 +60,7 @@ int main(){
     //             while (answer == 'Y' || answer == 'y'){
     //                 cout<<"Give the course"<<endl;
     //                 cin>>c;
-    //
+    //                 in_courses.push_back(sec.find(c));
     //                 cout<<"Do you want to give another course (Y/N)?"
     //                 cin>>answer;
     //             }
