@@ -91,13 +91,13 @@ int main(){
     //                  cout<<"Give the new mail"<<endl;
     //                  cin>>in_mail;
     //                  Person* person = sec.find(n, s);
-    //                  person.mail = in_mail;
+    //                  person->set_mail(in_mail);
     //              }
     //              else if (y == 2){
     //                  cout<<"Give the new age"<<endl;
     //                  cin>>in_age;
     //                  Person* person = sec.find(n, s);
-    //                  person.mail = in_mail;
+    //                  person->set_age(in_age);
     //              }
     //              else {
     //                  cout<<"Do you want to add (1) or delete (2) a professor's course?"<<endl;
