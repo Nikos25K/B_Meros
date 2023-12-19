@@ -13,7 +13,7 @@ inline void check_open(ifstream& fin){
     }
 }
 
-static inline int count_lines(string name){
+inline int count_lines(string name){
     ifstream fin(name);
     check_open(fin);
     int count=0;
@@ -29,6 +29,23 @@ int main(){
     // int choice, sem;
     // string x, n, s, c;
     // char answer;
+    // do{
+    //     cout<<"Choices:"<<endl;
+    //     cout<<"1. Add, edit or delete a professor"<<endl;
+    //     cout<<"2. Add, edit or delete a student"<<endl;
+    //     cout<<"3. Add, edit or delete a course"<<endl;
+    //     cout<<"4. Define a course's professors"<<endl;
+    //     cout<<"5. Add a student in a course"<<endl;
+    //     cout<<"6. Print and save in a file the students who succeeded in a specific course at a given semester"<<endl;
+    //     cout<<"7. Print the statistics of a semester for all of a professor's courses"<<endl;
+    //     cout<<"8. Print a student's marks for this semester and all the years in total"<<endl;
+    //     cout<<"9. Print the students who can graduate"<<endl;
+    //     cout<<"10. Exit"<<endl;
+    //     cin>>choice;
+    // int choice, sem, y, z, in_age;
+    // string x, n, s, c, in_mail;
+    // char answer;
+
     // do{
     //     cout<<"Choices:"<<endl;
     //     cout<<"1. Add, edit or delete a professor"<<endl;
@@ -67,6 +84,34 @@ int main(){
     //             Professor prof(n, s, in_mail, in_age, in_courses);
     //             sec += prof;
     //         }
+    //         else if (x == "edit"){
+    //              cout<<"Do you want to change the professor's mail (1), age (2) or courses (3)?"<<endl;
+    //              cin>>y;
+    //              if (y == 1){
+    //                  cout<<"Give the new mail"<<endl;
+    //                  cin>>in_mail;
+    //                  Person* person = sec.find(n, s);
+    //                  person.mail = in_mail;
+    //              }
+    //              else if (y == 2){
+    //                  cout<<"Give the new age"<<endl;
+    //                  cin>>in_age;
+    //                  Person* person = sec.find(n, s);
+    //                  person.mail = in_mail;
+    //              }
+    //              else {
+    //                  cout<<"Do you want to add (1) or delete (2) a professor's course?"<<endl;
+    //                  cin>>z;
+
+
+
+                        
+    //              }
+    //         }
+    //         else {
+    //              Person* person = sec.find(n, s))
+    //              sec -= person;
+    //         }    
     //     }
     //     else if (choice == 2){
     //         cout<<"Do you want to add, edit or delete a student?"<<endl;
