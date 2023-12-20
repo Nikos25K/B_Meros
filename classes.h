@@ -94,7 +94,8 @@ class Student: public Person{
 		
 		int get_ECTS() const;
 		int get_AM() const;
-        int get_semester() const;
+	        int get_semester() const;
+		map<Course*, double> get_map() const;
 
 		void set_ECTS(int ects);
 		void set_AM(int am);            //isos fygei
