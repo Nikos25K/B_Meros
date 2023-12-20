@@ -163,7 +163,6 @@ int main(){
 
 
                         
-<<<<<<< HEAD
                  }
             }
             else {
@@ -247,7 +246,6 @@ int main(){
 
         }
     }while (choice != 10);
-=======
     //              }
     //         }
     //         else {
@@ -341,7 +339,7 @@ int main(){
     //          }
     //     }
     // }while (choice != 10);
->>>>>>> a46b40c96e6d0eb2df1e890bac1b322763403d76
+
 
     // Professor prof("Makis", "Dhmakis", "mail", 34, vec);
 
