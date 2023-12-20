@@ -162,12 +162,34 @@ int main(){
     //         cin>>s;
     //     }
     //     else if (choice == 8){
-    //         cout<<"Give the semester"<<endl;
-    //         cin>>sem;
     //         cout<<"Give the student's name"<<endl;
     //         cin>>n;
     //         cout<<"Give the student's surname"<<endl;
     //         cin>>s;
+    //         Person* p = find(n, s);
+    //         if (p != NULL){
+    //             Student* student = dynamic_cast<Student*>(p); 
+    //             map<Course*, double> m = student->get_map();
+    //             cout<<"The grades of"<<n + " " + s<<"for this semester are:"<<endl;
+    //             for (auto it = m.begin(); it != m.end(); ++it){
+    //                 Course* course = it->first;
+    //                 double grade = it->second;
+    //                 if (course->get_semester() == student->get_semester()){
+    //                     cout<<course->get_name()<<" : "<<grade<<endl;
+    //                 }
+    //             }
+    //             cout<<"The grades of"<<n + " " + s<<"for the previous semesters are:"<<endl;
+    //             for (auto it = m.begin(); it != m.end(); ++it){
+    //                 Course* course = it->first;
+    //                 double grade = it->second;
+    //                 if (course->get_semester() != student->get_semester()){
+    //                     cout<<course->get_name()<<" : "<<grade<<endl;
+    //                 }
+    //             }
+    //         }
+    //         else {
+    //             cout<<n + " " + s<<"isn't found"<<endl;
+    //         }
     //     }
     //     else if (choice == 9){
     //          cout<<"The students who can graduate are the following:"<<endl;
