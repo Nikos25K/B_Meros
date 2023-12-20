@@ -28,7 +28,7 @@ int Course::get_semester() const{
     return semester;
 }
 
-vector<Person*> Course::get_people() const{
+vector<Person*> Course::get_people(){
     return people;
 }
 
@@ -53,6 +53,13 @@ void Course::set_mandatory(bool value=0){
 void Course::set_semester(int sem=0){
     semester = sem;
 }
+void Course::set_passed(int pass=0){
+    passed = pass;
+}
+void Course::set_failed(int fail=0){
+    failed = fail;
+}
+
 void Course::set_professors(vector<Professor*> in_profs){
     for(Professor* prof_ptr : in_profs)
         people.push_back(prof_ptr);
@@ -64,13 +71,41 @@ void Course::incr_failed(void){
     failed++;
 }
 
+double Course::get_avg_grade(){
+    double sum=0.0;
+    int count=0;
+    for(Person* per: people){
+        if(!per->get_type())     //Students only
+            continue;
+        count++;
+        Student* stud = dynamic_cast<Student*>(per);
+        if(!stud){
+            cerr<<"Error casting"<<endl;
+            exit(1);
+        }
+        sum += stud->course_grade(this);
+
+    }
+    if(count)
+        return sum/count;
+    return 0.0;
+}
+
 Course& Course::operator+=(Person* per){
     if(per->get_type()){
         Student* stud = dynamic_cast<Student*>(per);
+        if(!stud){
+            cerr<<"Error casting"<<endl;
+            exit(1);
+        }
         people.push_back(new Student(*stud));
     }
     else{
         Professor* prof = dynamic_cast<Professor*>(per);
+        if(!prof){
+            cerr<<"Error casting"<<endl;
+            exit(1);
+        }
         people.push_back(new Professor(*prof));
     }
 
@@ -81,6 +116,10 @@ Course& Course::operator-=(Person* per){
     auto check = find(people.begin(), people.end(), per);
     if (check != people.end())
         people.erase(check);
-
+    Student* stud = dynamic_cast<Student*>(per);
+    if(!stud){
+        cerr<<"Error casting"<<endl;
+        exit(1);
+    }
     return *this;
 }

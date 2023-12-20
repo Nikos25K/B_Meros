@@ -50,6 +50,21 @@ bool Person::get_type() const{
     return type;
 }
 
+void Person::set_name(string in_name){
+    name = in_name;
+}
+void Person::set_surname(string in_surname){
+    surname = in_surname;
+}
+void Person::set_mail(string in_mail){
+    mail = in_mail;
+}
+void Person::set_age(int in_age){
+    age = in_age;
+}
+void Person::set_type(bool in_type){
+    type = in_type;
+}
 
 ostream &operator<<(ostream &str, Person person){
     str<<"------------------"<<endl;

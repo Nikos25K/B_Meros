@@ -1,3 +1,6 @@
+#ifndef CLASSES_H
+#define CLASSES_H
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -34,6 +37,12 @@ class Person{
         int get_age() const;
         bool get_type() const;
 
+        void set_name(string in_name);
+        void set_surname(string in_surname);
+        void set_mail(string in_mail);
+        void set_age(int in_age);
+        void set_type(bool in_type);
+
         friend ostream &operator<<(ostream &left, const Person person);
         friend istream &operator>>(istream &in, Person &person);
 
@@ -53,7 +62,7 @@ class Secretary{
         Secretary(Secretary& secretary);
         ~Secretary();
 
-        vector<Person*> get_data() const;
+        vector<Person*> get_data();
         int get_count() const;
 
         Secretary& operator+(Person person);     //adds Person or Person*
@@ -70,14 +79,14 @@ class Secretary{
         Person* find(Person person);                 //find based on different args
         Person* find(Person* person);
 
-        vector<Student*> students_graduate() const;
+        vector<Student*> students_graduate();
 
         Secretary& operator-=(Person* person);
 
         Secretary& operator+=(Course* course);
         Secretary& operator-=(Course* course);
 
-        Course* find(const string in_name) const;
+        Course* find(const string in_name);
 
 };
 
@@ -99,19 +108,22 @@ class Student: public Person{
 		int get_ECTS() const;
 		int get_AM() const;
         int get_semester() const;
-		map<Course*, double> get_map() const;
+		map<Course*, double> get_map();
 
 		void set_ECTS(int ects);
-		void set_AM(int am);            //isos fygei
-        void set_semester(int sem);     //++
+		void set_AM(int am);
+        void set_semester(int sem);
 
         virtual Student& operator+=(Course* course) override;
         virtual Student& operator-=(Course* course) override;
         double& operator[](Course* course);
 
         bool passed_course(Course* course);
+        double course_grade(Course* course);
 
         bool gets_degree() const;
+
+        void edit(bool mail, bool age, bool AM, bool ects, bool sem, int courses);
 
 };
 
@@ -126,11 +138,14 @@ class Professor: public Person{
         Professor(Professor& prof);
         ~Professor();
 
-        vector<Course*> get_courses() const;
+        vector<Course*> get_courses();
 
         virtual Professor& operator+=(Course* course) override;
         virtual Professor& operator-=(Course* course) override;
 
+        void edit(bool mail, bool age);
+
+        void create()
 };
 
 class Course{
@@ -155,7 +170,7 @@ class Course{
         string get_name() const;
         bool is_mandatory() const;
         int get_semester() const;
-        vector<Person*> get_people() const;
+        vector<Person*> get_people();
         int get_passed() const;
         int get_failed() const;
 
@@ -163,13 +178,19 @@ class Course{
         void set_ECTS(int ects);
         void set_mandatory(bool value);
         void set_semester(int sem);
+        void set_passed(int pass);
+        void set_failed(int fail);
+
+
         void set_professors(vector<Professor*> in_profs);
 
         void incr_passed();
         void incr_failed();
 
-        double get_avg_grade() const;
+        double get_avg_grade();
 
         Course& operator+=(Person* per);
         Course& operator-=(Person* per);
 };
+
+#endif

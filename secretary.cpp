@@ -27,7 +27,7 @@ Secretary::~Secretary(){
     data.clear();
 }
 
-vector<Person*> Secretary::get_data() const{
+vector<Person*> Secretary::get_data(){
     return data;
 }
 
@@ -110,7 +110,7 @@ Person* Secretary::find(Person *person){
     return find((*person).get_name(), (*person).get_surname());
 }
 
-vector<Student*> Secretary::students_graduate() const{
+vector<Student*> Secretary::students_graduate(){
     vector<Student*> degreeee;
     for(Person* person : data){
         if(!person->get_type())     //skips professors
@@ -150,7 +150,7 @@ Secretary& Secretary::operator-=(Course* course){
     return *this;
 }
 
-Course* Secretary::find(const string in_name) const{
+Course* Secretary::find(const string in_name){
     for (const auto sem : courses)
         for(Course* curr : sem)
             if(in_name == curr->get_name())

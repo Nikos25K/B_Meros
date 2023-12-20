@@ -23,7 +23,7 @@ int Student::get_AM() const{
 int Student::get_semester() const{
     return semester;
 }
-map<Course*, double> Student::get_map() const{
+map<Course*, double> Student::get_map(){
     return subjects;
 }
 
@@ -74,8 +74,18 @@ bool Student::gets_degree() const{
 }
 
 bool Student::passed_course(Course* course){
+    auto check = subjects.find(course);
+    if (check == subjects.end()) 
+        return false;
     if(subjects[course] >= 5)
         return true;
     return false;
     // return subjects[course] >= 5 ? true : false;
+}
+
+double Student::course_grade(Course* course){
+    auto check = subjects.find(course);
+    if (check == subjects.end()) 
+        return -1.0;
+    return subjects[course];
 }
