@@ -23,6 +23,9 @@ int Student::get_AM() const{
 int Student::get_semester() const{
     return semester;
 }
+map<Course*, double> Student::get_map() const{
+    return subjects;
+}
 
 void Student::set_ECTS(int ects){
     ECTS = ects;
