@@ -94,7 +94,7 @@ class Student: public Person{
 		
 		int get_ECTS() const;
 		int get_AM() const;
-	        int get_semester() const;
+        int get_semester() const;
 		map<Course*, double> get_map() const;
 
 		void set_ECTS(int ects);
@@ -104,6 +104,8 @@ class Student: public Person{
         Student& operator+=(Course* course);
         Student& operator-=(Course* course);
         double& operator[](Course* course);
+
+        bool passed_course(Course* course) const;
 
         bool gets_degree() const;
 };
@@ -160,6 +162,8 @@ class Course{
         void incr_passed();
         void incr_failed();
 
-        Course& operator+=(const Student* in_student);
+        double get_avg_grade() const;
+
+        Course& operator+=(const Student* in_student);          //+= Person*
         Course& operator+=(const Professor* prof);
 };

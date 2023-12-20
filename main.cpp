@@ -71,23 +71,7 @@ Person& add_courses(Secretary& sec, Person* per){
 }
 
 int main(){
-    //cout<<"Geia sou kouklaki\n";
-    // int choice, sem;
-    // string x, n, s, c;
-    // char answer;
-    // do{
-    //     cout<<"Choices:"<<endl;
-    //     cout<<"1. Add, edit or delete a professor"<<endl;
-    //     cout<<"2. Add, edit or delete a student"<<endl;
-    //     cout<<"3. Add, edit or delete a course"<<endl;
-    //     cout<<"4. Define a course's professors"<<endl;
-    //     cout<<"5. Add a student in a course"<<endl;
-    //     cout<<"6. Print and save in a file the students who succeeded in a specific course at a given semester"<<endl;
-    //     cout<<"7. Print the statistics of a semester for all of a professor's courses"<<endl;
-    //     cout<<"8. Print a student's marks for this semester and all the years in total"<<endl;
-    //     cout<<"9. Print the students who can graduate"<<endl;
-    //     cout<<"10. Exit"<<endl;
-    //     cin>>choice;
+    cout<<"Geia sou kouklaki\n";
     int choice, sem, y, z, in_age;
     string x, n, s, c, in_mail;
     char answer;
@@ -163,7 +147,6 @@ int main(){
 
 
                         
-                 }
             }
             else {
                  Person* person = sec.find(n, s)
@@ -184,161 +167,100 @@ int main(){
             cout<<"Which course you want to "<<x<<"?"<<endl;
             cin>>n;
         }
-        else if (choice == 4){
-            cout<<"Which course's professors you want to define?"<<endl;
+        else if (choice == 4 || choice == 5){
+            cout<<"Give the course"<<endl;
             cin>>c;
+            Course* course = sec.find(c);
+            check_ptr(course);
             do{
-                cout<<"Give professor's name"<<endl;
+                cout<<"Give name"<<endl;
                 cin>>n;
-                cout<<"Give professor's surname"<<endl;
+                cout<<"Give surname"<<endl;
                 cin>>s;
+                Person* p = sec.find(n, s);
+                check_ptr(p);
+                if(p->get_type()){
+                    Student* student = dynamic_cast<Student*>(p);
+                    check_ptr(student);
+                    course += student;
+                    student += course; 
+                    break;      //only one student for question 5                   
+                }
+                Professor* prof = dynamic_cast<Professor*>(p);
+                check_ptr(prof);
+                course += prof;
+                prof += course; 
+
                 cout<<"Do you want to define another professor? (Y/N)"<<endl;
                 cin>>answer;
             }while (answer == 'Y' || answer == 'y');
         }
-        else if (choice == 5){
-            cout<<"Give the course"<<endl;
-            cin>>c;
-            cout<<"Give the student's name"<<endl;
-            cin>>n;
-            cout<<"Give the student's surname"<<endl;
-            cin>>s;
-        }
         else if (choice == 6){
             cout<<"Give the course"<<endl;
-            cin>>c;
-            cout<<"Give the semester"<<endl;
-            cin>>sem;
+            cin>>c; //string
+            Course* course = sec.find(c);
+            check_ptr(course);
+            vector<Person*> people = course->get_people();
+            for(Person* per: people){
+                if(!per->get_type())
+                    continue;
+                Student* student = dynamic_cast<Student*>(per);
+                check_ptr(student);
+                if(student->passed_course(course))
+                    continue;           //print to file
+            }
         }
         else if (choice == 7){
-            cout<<"Give the semester"<<endl;
-            cin>>sem;
             cout<<"Give professor's name"<<endl;
             cin>>n;
             cout<<"Give professor's surname"<<endl;
             cin>>s;
+            Person* p = sec.find(n, s);
+            check_ptr(p);
+            Professor* prof = dynamic_cast<Professor*>(p);          //check for func
+            check_ptr(prof); 
+            vector<Course*> vec = prof->get_courses();
+            for(Course* course : vec){
+                cout<<"Course "<<course->get_name()<<endl;
+                cout<<"Passed: "<<course->get_passed()<<"/"<<course->get_passed()+course->get_failed()<<
+                " \t"<<"Avg grade: "<<course->get_avg_grade()<<endl;
+            }
         }
         else if (choice == 8){
-            cout<<"Give the semester"<<endl;
-            cin>>sem;
             cout<<"Give the student's name"<<endl;
             cin>>n;
             cout<<"Give the student's surname"<<endl;
             cin>>s;
+            Person* p = sec.find(n, s);
+            check_ptr(p);
+            Student* student = dynamic_cast<Student*>(p); 
+            check_ptr(student);
+            map<Course*, double> m = student->get_map();
+            int curr = student->get_semester();
+
+            cout<<"The grades of "<<n + " " + s<<" for the previous semesters are:"<<endl;
+            for(int i=1; i<=curr; i++){
+                if(i==curr)
+                    cout<<"The grades of "<<n + " " + s<<" for this semester are:"<<endl;
+                for (auto it = m.begin(); it != m.end(); ++it){
+                    Course* course = it->first;
+                    double grade = it->second;
+                    if (course->get_semester() == i)
+                        cout<<course->get_name()<<" : "<<grade<<endl;
+                }
+            }
         }
         else if (choice == 9){
-             cout<<"The students who can graduate are the following:"<<endl;
-
-             void Course::set_professors(vector<Professor*> in_profs){
-             for(Professor* prof_ptr : in_profs)
-                 people.push_back(prof_ptr);
-             }
-
-
-        vector<Person*> vec1 = sec.get_data();
-
-        for(Person* per : vec1)
-            if (per->get_type() == 1){
-                if (per->semester >= 8){
-                    bool flag = 0;
-                }
-            }  
-
+            vector<Student*> vec1 = sec.students_graduate();
+            if(vec1.empty()){
+                cout<<"No students can graduate"<<endl;
+                continue;
+            }
+            cout<<"The students who can graduate are the following:"<<endl;
+            for(Student* stud : vec1)
+                cout<<stud->get_name() + " " + stud->get_surname()<<endl;
         }
     }while (choice != 10);
-    //              }
-    //         }
-    //         else {
-    //              Person* person = sec.find(n, s))
-    //              sec -= person;
-    //         }    
-    //     }
-    //     else if (choice == 2){
-    //         cout<<"Do you want to add, edit or delete a student?"<<endl;
-    //         cin>>x;
-    //         cout<<"What's the name of the student you want to "<<x<<"?"<<endl;
-    //         cin>>n;
-    //         cout<<"What's the surname of the student you want to "<<x<<"?"<<endl;
-    //         cin>>s;
-    //     }
-    //     else if (choice == 3){
-    //         cout<<"Do you want to add, edit or delete a course?"<<endl;
-    //         cin>>x;
-    //         cout<<"Which course you want to "<<x<<"?"<<endl;
-    //         cin>>n;
-    //     }
-    //     else if (choice == 4){
-    //         cout<<"Which course's professors you want to define?"<<endl;
-    //         cin>>c;
-    //         do{
-    //             cout<<"Give professor's name"<<endl;
-    //             cin>>n;
-    //             cout<<"Give professor's surname"<<endl;
-    //             cin>>s;
-    //             cout<<"Do you want to define another professor? (Y/N)"<<endl;
-    //             cin>>answer;
-    //         }while (answer == 'Y' || answer == 'y');
-    //     }
-    //     else if (choice == 5){
-    //         cout<<"Give the course"<<endl;
-    //         cin>>c;
-    //         cout<<"Give the student's name"<<endl;
-    //         cin>>n;
-    //         cout<<"Give the student's surname"<<endl;
-    //         cin>>s;
-    //     }
-    //     else if (choice == 6){
-    //         cout<<"Give the course"<<endl;
-    //         cin>>c;
-    //         cout<<"Give the semester"<<endl;
-    //         cin>>sem;
-    //     }
-    //     else if (choice == 7){
-    //         cout<<"Give the semester"<<endl;
-    //         cin>>sem;
-    //         cout<<"Give professor's name"<<endl;
-    //         cin>>n;
-    //         cout<<"Give professor's surname"<<endl;
-    //         cin>>s;
-    //     }
-    //     else if (choice == 8){
-    //         cout<<"Give the student's name"<<endl;
-    //         cin>>n;
-    //         cout<<"Give the student's surname"<<endl;
-    //         cin>>s;
-    //         Person* p = find(n, s);
-    //         if (p != NULL){
-    //             Student* student = dynamic_cast<Student*>(p); 
-    //             map<Course*, double> m = student->get_map();
-    //             cout<<"The grades of"<<n + " " + s<<"for this semester are:"<<endl;
-    //             for (auto it = m.begin(); it != m.end(); ++it){
-    //                 Course* course = it->first;
-    //                 double grade = it->second;
-    //                 if (course->get_semester() == student->get_semester()){
-    //                     cout<<course->get_name()<<" : "<<grade<<endl;
-    //                 }
-    //             }
-    //             cout<<"The grades of"<<n + " " + s<<"for the previous semesters are:"<<endl;
-    //             for (auto it = m.begin(); it != m.end(); ++it){
-    //                 Course* course = it->first;
-    //                 double grade = it->second;
-    //                 if (course->get_semester() != student->get_semester()){
-    //                     cout<<course->get_name()<<" : "<<grade<<endl;
-    //                 }
-    //             }
-    //         }
-    //         else {
-    //             cout<<n + " " + s<<"isn't found"<<endl;
-    //         }
-    //     }
-    //     else if (choice == 9){
-    //          cout<<"The students who can graduate are the following:"<<endl;
-    //          vector<Student*> vec1 = sec.students_graduate();
-    //          for(Student* stud : vec1){
-    //              cout<<stud->get_name() + " " + stud->get_surname()<<endl;
-    //          }
-    //     }
-    // }while (choice != 10);
 
 
     // Professor prof("Makis", "Dhmakis", "mail", 34, vec);

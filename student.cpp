@@ -72,3 +72,7 @@ bool Student::gets_degree() const{
 
     return true;
 }
+
+bool Student::passed_course(Course* course) const{
+    return subjects[course] >= 5 ? true : false;
+}
