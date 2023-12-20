@@ -24,6 +24,52 @@ inline int count_lines(string name){
     return count;
 }
 
+inline void check_num(int choice, int low, int upp){    //bounds check
+    if(choice<low || choice>upp){
+        cerr << "Error: Number out of bounds" << endl;
+        exit(1);
+    }
+}
+
+inline void check_ptr(void* ptr){
+    if(!ptr){
+        cerr << "Error: Person/Course not found" << endl;
+        exit(1);
+    }
+}
+
+Person& add_courses(Secretary& sec, Person* per){
+    string course_name;
+    char answer;
+    Professor* prof;
+    Student* student;
+    if(!per->get_type()){
+        prof = dynamic_cast<Professor*>(per);         //change this with virtual??????? 
+        if(!prof)
+            exit(1);
+        prof += course;
+    }
+    else{
+        student = dynamic_cast<Student*>(person); 
+        if(!student)
+            exit(1);
+        student += course;
+    }
+    do{
+        cout<<"Give the course"<<endl;
+        cin>>course_name;
+        Course* course = sec.find(c);
+        check_ptr((void*)course);
+        if(per->get_type())
+            prof += course;
+        else
+            student += course;
+
+        cout<<"Do you want to give another course (Y/N)?"<<endl;
+        cin>>answer;
+    }while (answer == 'Y' || answer == 'y');
+}
+
 int main(){
     //cout<<"Geia sou kouklaki\n";
     // int choice, sem;
@@ -42,70 +88,166 @@ int main(){
     //     cout<<"9. Print the students who can graduate"<<endl;
     //     cout<<"10. Exit"<<endl;
     //     cin>>choice;
-    // int choice, sem, y, z, in_age;
-    // string x, n, s, c, in_mail;
-    // char answer;
+    int choice, sem, y, z, in_age;
+    string x, n, s, c, in_mail;
+    char answer;
 
-    // do{
-    //     cout<<"Choices:"<<endl;
-    //     cout<<"1. Add, edit or delete a professor"<<endl;
-    //     cout<<"2. Add, edit or delete a student"<<endl;
-    //     cout<<"3. Add, edit or delete a course"<<endl;
-    //     cout<<"4. Define a course's professors"<<endl;
-    //     cout<<"5. Add a student in a course"<<endl;
-    //     cout<<"6. Print and save in a file the students who succeeded in a specific course at a given semester"<<endl;
-    //     cout<<"7. Print the statistics of a semester for all of a professor's courses"<<endl;
-    //     cout<<"8. Print a student's marks for this semester and all the years in total"<<endl;
-    //     cout<<"9. Print the students who can graduate"<<endl;
-    //     cout<<"10. Exit"<<endl;
-    //     cin>>choice;
-    //     if (choice == 1){
-    //         cout<<"Do you want to add, edit or delete a professor?"<<endl;
-    //         cin>>x;
-    //         cout<<"What's the name of the professor you want to "<<x<<"?"<<endl;
-    //         cin>>n;
-    //         cout<<"What's the surname of the professor you want to "<<x<<"?"<<endl;
-    //         cin>>s;
-    //         if (x == "add"){
-    //             cout<<"Give the professor's mail"<<endl;
-    //             cin>>in_mail;
-    //             cout<<"Give the professor's age"<<endl;
-    //             cin>>in_age;
-    //             vector<Course*> in_courses = {};
-    //             cout<<"Do you want to give a professor's course (Y/N)"<<endl;
-    //             cin>>answer;
-    //             while (answer == 'Y' || answer == 'y'){
-    //                 cout<<"Give the course"<<endl;
-    //                 cin>>c;
-    //                 in_courses.push_back(sec.find(c));
-    //                 cout<<"Do you want to give another course (Y/N)?"
-    //                 cin>>answer;
-    //             }
-    //             Professor prof(n, s, in_mail, in_age, in_courses);
-    //             sec += prof;
-    //         }
-    //         else if (x == "edit"){
-    //              cout<<"Do you want to change the professor's mail (1), age (2) or courses (3)?"<<endl;
-    //              cin>>y;
-    //              if (y == 1){
-    //                  cout<<"Give the new mail"<<endl;
-    //                  cin>>in_mail;
-    //                  Person* person = sec.find(n, s);
-    //                  person->set_mail(in_mail);
-    //              }
-    //              else if (y == 2){
-    //                  cout<<"Give the new age"<<endl;
-    //                  cin>>in_age;
-    //                  Person* person = sec.find(n, s);
-    //                  person->set_age(in_age);
-    //              }
-    //              else {
-    //                  cout<<"Do you want to add (1) or delete (2) a professor's course?"<<endl;
-    //                  cin>>z;
+    Secretary sec;
+    vector<Person*> TO_DELETE;
 
+    do{
+        cout<<"Choices:"<<endl;
+        cout<<"1. Add, edit or delete a professor"<<endl;
+        cout<<"2. Add, edit or delete a student"<<endl;
+        cout<<"3. Add, edit or delete a course"<<endl;
+        cout<<"4. Define a course's professors"<<endl;
+        cout<<"5. Add a student in a course"<<endl;
+        cout<<"6. Print and save in a file the students who succeeded in a specific course at a given semester"<<endl;
+        cout<<"7. Print the statistics of a semester for all of a professor's courses"<<endl;
+        cout<<"8. Print a student's marks for this semester and all the years in total"<<endl;
+        cout<<"9. Print the students who can graduate"<<endl;
+        cout<<"10. Exit"<<endl;
+        cin>>choice;
+        check_num(choice,1,10);
+        if (choice == 1){
+            cout<<"Do you want to add, edit or delete a professor?"<<endl;
+            cin>>x;
+            cout<<"What's the name of the professor you want to "<<x<<"?"<<endl;
+            cin>>n;
+            cout<<"What's the surname of the professor you want to "<<x<<"?"<<endl;
+            cin>>s;
+
+            if (x == "add"){
+                cout<<"Give the professor's mail"<<endl;
+                cin>>in_mail;
+                cout<<"Give the professor's age"<<endl;
+                cin>>in_age;
+                vector<Course*> in_courses;
+                cout<<"Do you want to give a professor's course (Y/N)"<<endl;
+                cin>>answer;
+                if(answer != 'Y' && answer != 'y')
+                    break;
+                
+                Professor* prof = new Professor(n, s, in_mail, in_age, in_courses);
+                // Professor prof(n, s, in_mail, in_age, in_courses);
+                sec += prof;
+            }
+            else if (x == "edit"){
+                cout<<"Do you want to change the professor's mail (1), age (2) or courses (3)?"<<endl;
+                cin>>y;
+                check_num(y,1,3);
+                Person* person = sec.find(n, s);
+                check_ptr(person); 
+                 if (y == 1){
+                    cout<<"Give the new mail"<<endl;       //new mail
+                    cin>>in_mail;                   
+                    person->set_mail(in_mail);
+                 }
+                 else if (y == 2){
+                    cout<<"Give the new age"<<endl;        //new age
+                    cin>>in_age;   
+                    check_num(in_age,18,80);
+                    person->set_age(in_age);
+                 }
+                 else {                                     //new courses
+                        cout<<"Do you want to add (1) or delete (2) professor's courses?"<<endl;
+                        cin>>z;
+                        check_num(z,1,2);
+                        if(z == 1)         //add
+                            add_courses(sec,person);        //maybe void and just modify
+                        else               //delete
+                            delete_courses(sec,person);
+                        
+
+                    }
 
 
                         
+<<<<<<< HEAD
+                 }
+            }
+            else {
+                 Person* person = sec.find(n, s)
+                 sec -= person;
+            }    
+        }
+        else if (choice == 2){
+            cout<<"Do you want to add, edit or delete a student?"<<endl;
+            cin>>x;
+            cout<<"What's the name of the student you want to "<<x<<"?"<<endl;
+            cin>>n;
+            cout<<"What's the surname of the student you want to "<<x<<"?"<<endl;
+            cin>>s;
+        }
+        else if (choice == 3){
+            cout<<"Do you want to add, edit or delete a course?"<<endl;
+            cin>>x;
+            cout<<"Which course you want to "<<x<<"?"<<endl;
+            cin>>n;
+        }
+        else if (choice == 4){
+            cout<<"Which course's professors you want to define?"<<endl;
+            cin>>c;
+            do{
+                cout<<"Give professor's name"<<endl;
+                cin>>n;
+                cout<<"Give professor's surname"<<endl;
+                cin>>s;
+                cout<<"Do you want to define another professor? (Y/N)"<<endl;
+                cin>>answer;
+            }while (answer == 'Y' || answer == 'y');
+        }
+        else if (choice == 5){
+            cout<<"Give the course"<<endl;
+            cin>>c;
+            cout<<"Give the student's name"<<endl;
+            cin>>n;
+            cout<<"Give the student's surname"<<endl;
+            cin>>s;
+        }
+        else if (choice == 6){
+            cout<<"Give the course"<<endl;
+            cin>>c;
+            cout<<"Give the semester"<<endl;
+            cin>>sem;
+        }
+        else if (choice == 7){
+            cout<<"Give the semester"<<endl;
+            cin>>sem;
+            cout<<"Give professor's name"<<endl;
+            cin>>n;
+            cout<<"Give professor's surname"<<endl;
+            cin>>s;
+        }
+        else if (choice == 8){
+            cout<<"Give the semester"<<endl;
+            cin>>sem;
+            cout<<"Give the student's name"<<endl;
+            cin>>n;
+            cout<<"Give the student's surname"<<endl;
+            cin>>s;
+        }
+        else if (choice == 9){
+             cout<<"The students who can graduate are the following:"<<endl;
+
+             void Course::set_professors(vector<Professor*> in_profs){
+             for(Professor* prof_ptr : in_profs)
+                 people.push_back(prof_ptr);
+             }
+
+
+        vector<Person*> vec1 = sec.get_data();
+
+        for(Person* per : vec1)
+            if (per->get_type() == 1){
+                if (per->semester >= 8){
+                    bool flag = 0;
+                }
+            }  
+
+        }
+    }while (choice != 10);
+=======
     //              }
     //         }
     //         else {
@@ -199,6 +341,7 @@ int main(){
     //          }
     //     }
     // }while (choice != 10);
+>>>>>>> a46b40c96e6d0eb2df1e890bac1b322763403d76
 
     // Professor prof("Makis", "Dhmakis", "mail", 34, vec);
 
@@ -215,7 +358,7 @@ int main(){
 
     // cout<<sec;
 
-    Secretary sec;
+    
 
     int count = count_lines("files/students.txt");
     ifstream fin("files/students.txt");
