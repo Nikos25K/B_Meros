@@ -4,12 +4,12 @@ Student::Student() : Person("", "", "", 0, ""), AM(0), ECTS(0), semester(0), sub
 
 //basic constructor
 Student::Student(const string in_name = " ", const string in_surname = " ", const string in_mail = " ", 
-const int in_age = 0, const int am = 0, const int ects = 0, const int sem = 0, const map<Course*, double> sub = {}):
+const int in_age = 0, const int am = 0, const int ects = 0, const int sem = 0, map<Course*, double> sub = {}):
 Person(in_name, in_surname, in_mail, in_age, true),
 AM(am), ECTS(ects), semester(sem), subjects(sub){}
 
 //copy contructor
-Student::Student(const Student& student):
+Student::Student(Student& student):
 Person(student), AM(student.AM), ECTS(student.ECTS), semester(student.semester), subjects(student.subjects) {}
 
 Student::~Student(){}
@@ -73,6 +73,9 @@ bool Student::gets_degree() const{
     return true;
 }
 
-bool Student::passed_course(Course* course) const{
-    return subjects[course] >= 5 ? true : false;
+bool Student::passed_course(Course* course){
+    if(subjects[course] >= 5)
+        return true;
+    return false;
+    // return subjects[course] >= 5 ? true : false;
 }

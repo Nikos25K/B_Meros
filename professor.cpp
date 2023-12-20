@@ -3,10 +3,10 @@
 Professor::Professor(): Person() {}
 
 Professor::Professor(const string in_name="", const string in_surname="", const string in_mail="",
-const int in_age=0, const vector<Course*> in_courses={}):
+const int in_age=0, vector<Course*> in_courses={}):
 Person(in_name, in_surname, in_mail, in_age, false), courses(in_courses){}
 
-Professor::Professor(const Professor& prof) : Person(prof), courses(prof.get_courses()) {}
+Professor::Professor(Professor& prof) : Person(prof), courses(prof.get_courses()) {}
 
 Professor::~Professor() {}
 

@@ -7,7 +7,7 @@ Person::Person() : name(""), surname(""), mail(""), age(0), type(false){
 }
 
 //constructor based on Person*
-Person::Person(const Person *ptr) :name(ptr->get_name()), surname(ptr->get_surname()), mail(ptr->get_mail()),
+Person::Person(Person *ptr) :name(ptr->get_name()), surname(ptr->get_surname()), mail(ptr->get_mail()),
 age(ptr->get_age()), type(ptr->get_type()){
     count++;
 }
@@ -20,7 +20,7 @@ name(in_name), surname(in_surname), mail(in_mail), age(in_age), type(in_type){
 }
 
 //copy contructor
-Person::Person(const Person& person):
+Person::Person(Person& person):
 name(person.name), surname(person.surname), mail(person.mail), 
 age(person.age), type(person.type){
     count++;
@@ -51,7 +51,7 @@ bool Person::get_type() const{
 }
 
 
-ostream &operator<<(ostream &str, const Person person){
+ostream &operator<<(ostream &str, Person person){
     str<<"------------------"<<endl;
     str<<"Name: "<<person.name <<" "<<person.surname<<endl;
     str<<"Mail: "<<person.mail<<endl;
@@ -79,4 +79,11 @@ istream &operator>>(istream &str, Person &person){
     str>>person.type;
 
     return str;
+}
+
+Person& Person::operator+=(Course* course){
+    return *this;
+}
+Person& Person::operator-=(Course* course){
+    return *this;
 }
