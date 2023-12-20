@@ -171,25 +171,12 @@ int main(){
     //     }
     //     else if (choice == 9){
     //          cout<<"The students who can graduate are the following:"<<endl;
-
-    //          void Course::set_professors(vector<Professor*> in_profs){
-    //          for(Professor* prof_ptr : in_profs)
-    //              people.push_back(prof_ptr);
+    //          vector<Student*> vec1 = sec.students_graduate();
+    //          for(Student* stud : vec1){
+    //              cout<<stud->get_name() + " " + stud->get_surname()<<endl;
     //          }
-
-
-        // vector<Person*> vec1 = sec.get_data();
-
-    //     for(Person* per : vec1)
-    //         if (per->get_type() == 1){
-    //             if (per->semester >= 8){
-    //                 bool flag = 0;
-    //             }
-    //         }  
-
     //     }
     // }while (choice != 10);
-
 
     // Professor prof("Makis", "Dhmakis", "mail", 34, vec);
 
