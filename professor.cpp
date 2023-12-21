@@ -26,3 +26,7 @@ Professor& Professor::operator-=(Course* course) {
         
     return *this;
 }
+
+Professor* Professor::clone(){
+    return new Professor(*this);
+}

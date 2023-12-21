@@ -7,35 +7,100 @@
 // }
 
 int main(){
-    cout<<"Geia sou kouklaki\n";
-    int choice, sem, y, z, in_age;
-    string x, n, s, c, in_mail;
-    char answer;
+    // cout<<"Geia sou kouklaki\n";
 
     Secretary sec;
-    // vector<Person*> TO_DELETE;
+    int count = count_lines("files/students.txt");
+    ifstream fin("files/students.txt");
+    check_open(fin);
 
 
-    // Student std1("name","sur","mail",19,83,123,2,{});
+    string name, surname, mail, course, line;
+    int age, am, ECTS, sem, temp_count;
+    float grade;
+    //type
+    map<Course*,double> mathimata;
+    
+    temp_count=0;
+    while(getline(fin, line)){
+        temp_count++;
+        istringstream fin(line);
+        fin>>name>>surname>>mail>>age>>am>>ECTS>>sem;
+        mathimata.clear();      //sets for new student
+        Course* tmp;
+        while(fin>>course>>grade){
+            tmp = sec.find(course);
+            mathimata[tmp] = grade;
+        }
 
-    // Student* ss = &std1;
+        // Student* student = new Student(name,surname,mail,age,am,ECTS,sem,mathimata);
+        // sec += student;
+        Student student(name,surname,mail,age,am,ECTS,sem,mathimata);
+        sec += &student;
+    }
 
-    // *ss += &c1;
+    //     //na kano apodesmefsi
 
-    // incr(std1);
-    // // std1.add_course(&c1);
+    fin.close();
+    check_lines(count,temp_count);
 
-    // map<Course*,double> map1 = std1.get_map();
+    count = count_lines("files/professors.txt");
+    fin.open("files/professors.txt");
+    check_open(fin);
+    temp_count=0;
+    while(getline(fin, line)){
+        temp_count++;
+        istringstream fin(line);
+        fin>>name>>surname>>mail>>age;
+        Course* tmp;
+        vector<Course*> tmp_courses;
+        while(fin>>course>>grade){
+            tmp = sec.find(course);     //finds course in sec
+            check_ptr(tmp);
+            tmp_courses.push_back(tmp);
+        }
+        Professor professor(name,surname,mail,age,tmp_courses);
+        // Professor* professor = new Professor(name,surname,mail,age,tmp_courses);
+        sec += &professor;
+    }
+    fin.close();            //na kano apodesmefsi
+    check_lines(count,temp_count);
 
-    // cout<<map1[&c1]<<endl;
 
-    // Professor prof1("name","sur","mail",19,{});
-    // incr(prof1);
+    count = count_lines("files/courses.txt");
+    fin.open("files/courses.txt");
+    check_open(fin);
+    temp_count=0;
+    string check;       //mandatory course or not
+    while(getline(fin, line)){
+        temp_count++;
+        istringstream fin(line);
+        fin>>name>>ECTS>>check>>sem;
 
-    // vector<Course*> vec1 = prof1.get_courses();
+        string tmp_name,tmp_surname;
+        vector<Person*> tmp_people;
+        Person* tmp;
+        while(fin>>tmp_name>>tmp_surname){
+            tmp = sec.find(tmp_name,tmp_surname);   //finds Person in sec
+            tmp_people.push_back(tmp);
+        }
+        // Course* course;
+        // if(check == "mandatory")
+        //     course = new Course(name,ECTS,1,sem,tmp_people,0,0);
+        // else
+        //     course = new Course(name,ECTS,0,sem,tmp_people,0,0);
+        Course course(name,ECTS,0,sem,tmp_people,0,0);
+        if(check == "mandatory")
+            course.set_mandatory(1);
+        
+        sec += &course;
+    }
+    fin.close();
+    check_lines(count,temp_count);
 
-    // cout<<vec1[0]->get_ECTS()<<endl;
-
+    int choice;
+    string x, n, s, c;
+    ofstream fout;
 
     do{
         cout<<"---------------------------------------------------------------------------------------------"<<endl;
@@ -54,12 +119,13 @@ int main(){
         cin>>choice;
         check_num(choice,1,10);
         if (choice == 1 || choice == 2){
-            cout<<"Do you want to add, edit or delete a person?"<<endl;
+            string is = (choice == 1) ? "professor" : "student";
+            cout<<"Do you want to add, edit or delete a "<<is<<"?"<<endl;
             cin>>x;
             //////////////////checkkkkkkkkkkkkkkkkkkkk
-            cout<<"What's the name of the person you want to "<<x<<"?"<<endl;
+            cout<<"What's the name of the "<<is<< " you want to "<<x<<"?"<<endl;
             cin>>n;
-            cout<<"What's the surname of the person you want to "<<x<<"?"<<endl;
+            cout<<"What's the surname of the "<<is<< " you want to "<<x<<"?"<<endl;
             cin>>s;
             Person* person;
             if(x != "add")
@@ -93,9 +159,9 @@ int main(){
                     person->edit(t_mail, t_age, t_am, t_ects, t_sem);
                 else
                     person->edit(t_mail, t_age);   //Prof
-                if(t_courses)
+                if(flag_courses && !t_courses)
                     add_courses(sec, n,s);
-                else
+                else if(flag_courses && t_courses)
                     delete_courses(sec, n,s);
             }
             else 
@@ -138,14 +204,19 @@ int main(){
         else if (choice == 6){
             Course* course = read_course(sec,"");
             vector<Person*> people = course->get_people();
+            string file_to_open = "Results_"+course->get_name();
+            fout.open(file_to_open);
+            check_open(fout);
+            fout<<"The students that passed "<<course->get_name()<<" are:"<<endl;            
             for(Person* per: people){
                 if(!per->get_type())
                     continue;
                 Student* student = dynamic_cast<Student*>(per);
                 check_ptr(student);
                 if(student->passed_course(course))
-                    continue;           //print to file
+                    fout << student;
             }
+            fout.close();
         }
         else if (choice == 7){
             Person* p = get_person(sec,"","");
@@ -190,112 +261,5 @@ int main(){
     }while (choice != 10);
 
     cout<<sec;
-
-
-    // Professor prof("Makis", "Dhmakis", "mail", 34, vec);
-
-    // map<Course*, double> subjects;
-    // subjects [&arch] = 9.3; 
-
-    // Student lenia_kouklaki("Lenia", "Triantafyllia", "mail", 120, 133, 220, 3, subjects);
-    // cout<<"Type"<<lenia_kouklaki.get_type()<<endl;
-
-    // sec += prof;
-    // sec += lenia_kouklaki;
-
-    // prof += &arch;
-
-    // cout<<sec;
-
-    
-
-    // int count = count_lines("files/students.txt");
-    // ifstream fin("files/students.txt");
-    // check_open(fin);
-
-
-    // string name, surname, mail, course, line;
-    // int age, am, ECTS, sem, temp_count;
-    // float grade;
-    // //type
-    // map<Course*,double> mathimata;
-    
-    // temp_count=0;
-    // vector<Person*> people;
-    // while(getline(fin, line)){
-    //     temp_count++;
-    //     istringstream fin(line);
-    //     fin>>name>>surname>>mail>>age>>am>>ECTS>>sem;
-    //     mathimata.clear();      //sets for new student
-    //     Course* tmp;
-    //     while(fin>>course>>grade){
-    //         tmp = sec.find(course);
-    //         mathimata[tmp] = grade;
-    //     }
-
-    //     Student* student = new Student(name,surname,mail,age,am,ECTS,sem,mathimata);
-    //     people.push_back(student);
-
-    // }
-
-    //     //na kano apodesmefsi
-
-    // fin.close();
-    // check_lines(count,temp_count);
-
-
-    // count = count_lines("files/professors.txt");
-    // fin.open("files/professors.txt");
-    // check_open(fin);
-    // temp_count=0;
-    // while(getline(fin, line)){
-    //     temp_count++;
-    //     istringstream fin(line);
-    //     fin>>name>>surname>>mail>>age;
-    //     Course* tmp;
-    //     vector<Course*> tmp_courses;
-    //     while(fin>>course>>grade){
-    //         tmp = sec.find(course);     //finds course in sec
-    //         tmp_courses.push_back(tmp);
-    //     }
-    //     Professor* professor = new Professor(name,surname,mail,age,tmp_courses);
-    //     people.push_back(professor);
-    // }
-    // fin.close();            //na kano apodesmefsi
-    // check_lines(count,temp_count);
-
-    // count = count_lines("files/courses.txt");
-    // fin.open("files/courses.txt");
-    // check_open(fin);
-    // vector<Course*> courses;
-    // temp_count=0;
-    // string check;       //mandatory course or not
-    // while(getline(fin, line)){
-    //     temp_count++;
-    //     istringstream fin(line);
-    //     fin>>name>>ECTS>>check>>sem;
-
-    //     string tmp_name,tmp_surname;
-    //     vector<Person*> tmp_people;
-    //     Person* tmp;
-    //     while(fin>>tmp_name>>tmp_surname){
-    //         tmp = sec.find(tmp_name,tmp_surname);   //finds Person in sec
-    //         tmp_people.push_back(tmp);
-    //     }
-    //     Course* course;
-    //     if(check == "mandatory")
-    //         course = new Course(name,ECTS,1,sem,tmp_people,0,0); 
-    //     else
-    //         course = new Course(name,ECTS,0,sem,tmp_people,0,0);
-    //     courses.push_back(course);
-
-    // }
-    // fin.close();
-    // check_lines(count,temp_count);
-
-    // for(Course* cour: courses)
-    //     cout<<cour->get_name()<<endl;
-
-
     return 0;
 }

@@ -39,8 +39,8 @@ void Student::set_semester(int sem){
 }
 
 Student& Student::operator+=(Course* course){
-    subjects[course] = 0.0;
-    // subjects.insert(make_pair(course,0.0));
+    // subjects[course] = 0.0;
+    subjects.insert(make_pair(course,0.0));
     return *this;
 }
 
@@ -110,5 +110,18 @@ void Student::edit(bool in_mail=0, bool in_age=0, bool in_am=0, bool in_ects=0, 
         cout<<"Give the new semester"<<endl;
         cin>>in;
         set_semester(in);
+    }
+}
+
+Student* Student::clone(){
+    return new Student(*this);
+}
+
+void Student::show_courses(){
+    for (auto it = subjects.begin(); it != subjects.end(); ++it) {
+        Course* cour = it->first;
+        cout<<cour->get_name()<<" ";
+        cout<<cour->get_ECTS()<<" ";
+        cout<<cour->is_mandatory()<<endl;
     }
 }

@@ -9,6 +9,7 @@ using namespace std;
 
 void check_lines(int count,int temp_count);
 void check_open(ifstream& fin);
+void check_open(ofstream& fin);
 int count_lines(string name);
 void check_num(int choice, int low, int upp);
 bool check_resp(bool numeric);

@@ -52,12 +52,14 @@ class Person{
 
         virtual void edit(bool in_mail, bool in_age);
         virtual void edit(bool in_mail, bool in_age, bool in_am, bool in_ects, bool in_sem);
+
+        virtual Person* clone();
 };
 
 class Secretary{
     private:
         vector<Person*> data;
-        vector<vector<Course*>> courses;
+        vector<Course*> courses;
 
     public:
         Secretary();
@@ -90,7 +92,9 @@ class Secretary{
         Secretary& operator+=(Course* course);
         Secretary& operator-=(Course* course);
 
-        Course* find(const string in_name);
+        Course* find(string in_name);
+
+        void show_courses();
 
 };
 
@@ -128,6 +132,14 @@ class Student: public Person{
         bool gets_degree() const;
 
         virtual void edit(bool in_mail, bool in_age, bool in_am, bool in_ects, bool in_sem) override;
+
+        virtual Student* clone() override;
+        void show_courses();
+        friend ostream& operator<<(ostream& os, const Student& student) {
+            os << "Name: " << student.name << "Surname: " << student.surname << ", Age: " << student.age;
+            os << "AM: " << student.AM << endl;
+            return os;
+        }
 };
 
 class Professor: public Person{
@@ -145,6 +157,8 @@ class Professor: public Person{
 
         virtual Professor& operator+=(Course* course) override;
         virtual Professor& operator-=(Course* course) override;
+
+        virtual Professor* clone() override;
 
 };
 

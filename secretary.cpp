@@ -43,7 +43,8 @@ Secretary& Secretary::operator+(Person person){
 
 //in case of adding Person*
 Secretary& Secretary::operator+(Person* person){
-    data.push_back(new Person(*person));
+    // data.push_back(new Person(*person));
+    data.push_back(person->clone());
     return *this;
 }
 
@@ -55,7 +56,8 @@ Secretary& Secretary::operator+=(Person person) {
 
 //in case of adding Person*
 Secretary& Secretary::operator+=(Person* person) {
-    data.push_back(new Person(*person));
+    // data.push_back(new Person(*person));
+    data.push_back(person->clone());
     return *this;
 }
 
@@ -135,26 +137,29 @@ Secretary& Secretary::operator-=(Person* person){
 }
 
 Secretary& Secretary::operator+=(Course* course){
-    courses[course->get_semester()].push_back(new Course(*course));
-    // sems[course->get_semester()] += course;
+    courses.push_back(new Course(*course));
     return *this;
 }
 
 Secretary& Secretary::operator-=(Course* course){
-    int semest = course->get_semester();
-    for (auto it = courses[semest].begin(); it != courses[semest].end(); ++it){
-        if (*it == course){
-            courses[semest].erase(it);
-        }
+    auto it = std::find(courses.begin(), courses.end(), course);
+    if (it != courses.end()) {
+        courses.erase(it);
     }
-    // sems[course->get_semester()] -= course;
     return *this;
 }
 
-Course* Secretary::find(const string in_name){
-    for (const auto sem : courses)
-        for(Course* curr : sem)
-            if(in_name == curr->get_name())
-                return curr;
+Course* Secretary::find(string in_name){
+    for(Course* curr : courses)
+        if(in_name == curr->get_name())
+            return curr;
     return NULL;
+}
+
+void Secretary::show_courses(){
+    for(Course* cour: courses){
+        cout<<cour->get_name()<<" ";
+        cout<<cour->get_ECTS()<<" ";
+        cout<<cour->is_mandatory()<<endl;
+    }
 }

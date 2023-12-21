@@ -72,7 +72,8 @@ ostream &operator<<(ostream &str, Person person){
     str<<"Name: "<<person.name <<" "<<person.surname<<endl;
     str<<"Mail: "<<person.mail<<endl;
     str<<"Age: "<<person.age<<endl;
-    str<<"Type: "<<person.type;
+    string is = (person.type == 0) ? "Professor" : "Student";
+    str<<"Is: "<<is;
     str<<endl<<"------------------"<<endl;
 
     return str;
@@ -121,3 +122,7 @@ void Person::edit(bool in_mail=0, bool in_age=0){
 }
 
 void Person::edit(bool in_mail, bool in_age, bool in_am, bool in_ects, bool in_sem) {}
+
+Person* Person::clone(){
+    return new Person(*this);
+}

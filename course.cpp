@@ -93,10 +93,10 @@ double Course::get_avg_grade(){
 }
 
 Course& Course::operator+=(Person* per){
-    if(per->get_type()){
+    if(per->get_type()){        
         Student* stud = dynamic_cast<Student*>(per);
         if(!stud){
-            cerr<<"Error casting"<<endl;
+            cerr<<"Error casting hereeeeeee"<<endl;
             exit(1);
         }
         people.push_back(new Student(*stud));

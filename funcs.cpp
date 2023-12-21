@@ -15,6 +15,13 @@ void check_open(ifstream& fin){
     }
 }
 
+void check_open(ofstream& fout){
+    if (!fout.is_open()) {
+        cerr << "Error: Could not open input file." << endl;
+        exit(1);
+    }
+}
+
 int count_lines(string name){
     ifstream fin(name);
     check_open(fin);
