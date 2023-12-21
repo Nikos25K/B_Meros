@@ -1,4 +1,5 @@
 #include "classes.h"
+#include "funcs.h"
 
 Secretary::Secretary(): data({}) {}
 

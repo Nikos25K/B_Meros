@@ -1,4 +1,5 @@
 #include "classes.h"
+#include "funcs.h"
 
 Course::Course(): name(""), ECTS(0), mandatory(0), semester(0),
 people({}), passed(0), failed(0) {}
@@ -122,4 +123,43 @@ Course& Course::operator-=(Person* per){
         exit(1);
     }
     return *this;
+}
+
+void Course::edit(bool name=0, bool ects=0, bool mand=0,
+bool sem=0, bool passed=0, bool failed=0){
+    if(name){
+        string in_name;
+        cout<<"Give the new name"<<endl;
+        cin>>in_name;
+        set_name(in_name);
+    }
+    if(ects){
+        int in_ects;
+        cout<<"Give the new ects"<<endl;
+        cin>>in_ects;
+        set_ECTS(in_ects);
+    }
+    if(mand){
+        cout<<"Is it mandatory? (y/n)"<<endl;
+        bool mand = check_resp(0);
+        set_mandatory(mand);
+    }
+    if(sem){
+        int in_sem;
+        cout<<"Give the new semester"<<endl;
+        cin>>in_sem;
+        set_semester(in_sem);
+    }
+    if(passed){
+        int in_passed;
+        cout<<"Give people that passed"<<endl;
+        cin>>in_passed;
+        set_passed(in_passed);
+    }
+    if(failed){
+        int in_failed;
+        cout<<"Give people that failed"<<endl;
+        cin>>in_failed;
+        set_failed(in_failed);
+    }
 }

@@ -9,6 +9,7 @@
 #include <map>
 #include <algorithm>
 
+
 using namespace std;
 
 class Course;
@@ -48,6 +49,9 @@ class Person{
 
         virtual Person& operator+=(Course* course);
         virtual Person& operator-=(Course* course);
+
+        virtual void edit(bool in_mail, bool in_age);
+        virtual void edit(bool in_mail, bool in_age, bool in_am, bool in_ects, bool in_sem);
 };
 
 class Secretary{
@@ -123,8 +127,7 @@ class Student: public Person{
 
         bool gets_degree() const;
 
-        void edit(bool mail, bool age, bool AM, bool ects, bool sem, int courses);
-
+        virtual void edit(bool in_mail, bool in_age, bool in_am, bool in_ects, bool in_sem) override;
 };
 
 class Professor: public Person{
@@ -143,9 +146,6 @@ class Professor: public Person{
         virtual Professor& operator+=(Course* course) override;
         virtual Professor& operator-=(Course* course) override;
 
-        void edit(bool mail, bool age);
-
-        void create()
 };
 
 class Course{
@@ -191,6 +191,8 @@ class Course{
 
         Course& operator+=(Person* per);
         Course& operator-=(Person* per);
+
+        void edit(bool name, bool ects, bool mand, bool sem, bool passed, bool failed);
 };
 
 #endif

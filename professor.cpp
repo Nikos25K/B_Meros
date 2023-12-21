@@ -26,19 +26,3 @@ Professor& Professor::operator-=(Course* course) {
         
     return *this;
 }
-
-void Professor::edit(bool mail=0, bool age=0){
-    if(mail){
-        string in_mail;
-        cout<<"Give the new mail"<<endl;
-        cin>>in_mail;
-        per.set_mail(in_mail);
-    }
-    if(age){
-        int in_age;
-        cout<<"Give the new age"<<endl;
-        cin>>in_age;
-        check_num(in_age,18,80);
-        per.set_age(in_age);
-    }
-}

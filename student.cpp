@@ -1,4 +1,5 @@
 #include "classes.h"
+#include "funcs.h"
 
 Student::Student() : Person("", "", "", 0, ""), AM(0), ECTS(0), semester(0), subjects({}){}
 
@@ -88,4 +89,26 @@ double Student::course_grade(Course* course){
     if (check == subjects.end()) 
         return -1.0;
     return subjects[course];
+}
+
+void Student::edit(bool in_mail=0, bool in_age=0, bool in_am=0, bool in_ects=0, bool in_sem=0){
+    Person::edit(in_mail,in_age);
+    if(in_am){
+        int in;
+        cout<<"Give the new AM"<<endl;
+        cin>>in;
+        set_AM(in);
+    }
+    if(in_ects){
+        int in;
+        cout<<"Give the new ects"<<endl;
+        cin>>in;
+        set_ECTS(in);
+    }
+    if(in_sem){
+        int in;
+        cout<<"Give the new semester"<<endl;
+        cin>>in;
+        set_semester(in);
+    }
 }

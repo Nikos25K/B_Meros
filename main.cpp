@@ -56,13 +56,14 @@ int main(){
         if (choice == 1 || choice == 2){
             cout<<"Do you want to add, edit or delete a person?"<<endl;
             cin>>x;
+            //////////////////checkkkkkkkkkkkkkkkkkkkk
             cout<<"What's the name of the person you want to "<<x<<"?"<<endl;
             cin>>n;
             cout<<"What's the surname of the person you want to "<<x<<"?"<<endl;
             cin>>s;
             Person* person;
             if(x != "add")
-                person = get_person(sec,n,s);
+                person = get_person(sec,n,s);   //updates
             if (x == "add" && choice == 1)      //create prof
                 create_person(sec,0,n,s);
             else if(x == "add" && choice == 2)  //create stud
@@ -72,15 +73,30 @@ int main(){
                 bool t_mail = check_resp(0);
                 cout<<"Do you want to change the age? (y,n)"<<endl;
                 bool t_age = check_resp(0);
+                bool t_am,t_ects,t_sem;
+                if(person->get_type()){
+                    cout<<"Do you want to change the AM? (y,n)"<<endl;
+                    t_am = check_resp(0);
+                    cout<<"Do you want to change the ECTS? (y,n)"<<endl;
+                    t_ects = check_resp(0);
+                    cout<<"Do you want to change the semester? (y,n)"<<endl;
+                    t_sem = check_resp(0);
+                }
                 cout<<"Do you want to change the courses? (y,n)"<<endl;
                 bool flag_courses = check_resp(0);
+                bool t_courses=0;
                 if(flag_courses){
                     cout<<"Do you want to add (0) or delete (1) courses?"<<endl;
-                    int t_courses = check_resp(1);
-                    edit_person(sec, *person, t_mail, t_age, t_courses);
+                    t_courses = check_resp(1);                                  //checkkkkkkkkkkkkkkkkk
                 }
+                if(person->get_type())         //Student
+                    person->edit(t_mail, t_age, t_am, t_ects, t_sem);
                 else
-                    edit_person(sec, *person, t_mail, t_age, 0);
+                    person->edit(t_mail, t_age);   //Prof
+                if(t_courses)
+                    add_courses(sec, n,s);
+                else
+                    delete_courses(sec, n,s);
             }
             else 
                 sec -= person;
@@ -88,7 +104,7 @@ int main(){
         else if (choice == 3){
             cout<<"Do you want to add, edit or delete a course?"<<endl;
             cin>>x;
-            Course* course = read_course(sec);
+            Course* course = read_course(sec,"");
             if (x == "add")
                 create_course(sec);
             else if (x == "edit"){
@@ -106,19 +122,21 @@ int main(){
                 bool t_pass = check_resp(0);
                 cout<<"Do you want to change the failed? (y,n)"<<endl;
                 bool t_fail = check_resp(0);
-                edit_course(sec,*course,t_name,t_ects,t_mand,t_sem,t_people,t_pass,t_fail);
+                course->edit(t_name,t_ects,t_mand,t_sem,t_pass,t_fail);
+                if(t_people)
+                    add_courses(sec,course->get_name(),"");
             }
             else 
                 sec -= course;
         }
         else if (choice == 4 || choice == 5){
-            Course* course = read_course(sec);
-            Person* p = get_person(sec,n,s);
+            Course* course = read_course(sec,"");
+            Person* p = get_person(sec,"","");
             if(p->get_type())
-                add_courses(sec,*p);
+                add_courses(sec,p->get_name(),p->get_surname());            //ELSE??????????
         }
         else if (choice == 6){
-            Course* course = read_course(sec);
+            Course* course = read_course(sec,"");
             vector<Person*> people = course->get_people();
             for(Person* per: people){
                 if(!per->get_type())
@@ -130,7 +148,7 @@ int main(){
             }
         }
         else if (choice == 7){
-            Person* p = get_person(sec,n,s);
+            Person* p = get_person(sec,"","");
             Professor* prof = dynamic_cast<Professor*>(p);          //check for func
             check_ptr(prof);
             vector<Course*> vec = prof->get_courses();
@@ -141,7 +159,7 @@ int main(){
             }
         }
         else if (choice == 8){
-            Person* p = get_person(sec,n,s);
+            Person* p = get_person(sec,"","");
             Student* student = dynamic_cast<Student*>(p); 
             check_ptr(student);
             map<Course*, double> m = student->get_map();
@@ -170,6 +188,8 @@ int main(){
                 cout<<stud->get_name() + " " + stud->get_surname()<<endl;
         }
     }while (choice != 10);
+
+    cout<<sec;
 
 
     // Professor prof("Makis", "Dhmakis", "mail", 34, vec);

@@ -1,4 +1,5 @@
 #include "classes.h"
+#include "funcs.h"
 
 int Person::count = 0;
 
@@ -102,3 +103,21 @@ Person& Person::operator+=(Course* course){
 Person& Person::operator-=(Course* course){
     return *this;
 }
+
+void Person::edit(bool in_mail=0, bool in_age=0){
+    if(in_mail){
+        string in_mail;
+        cout<<"Give the new mail"<<endl;
+        cin>>in_mail;
+        set_mail(in_mail);
+    }
+    if(in_age){
+        int in_age;
+        cout<<"Give the new age"<<endl;
+        cin>>in_age;
+        check_num(in_age,18,80);
+        set_age(in_age);
+    }
+}
+
+void Person::edit(bool in_mail, bool in_age, bool in_am, bool in_ects, bool in_sem) {}
