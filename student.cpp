@@ -4,10 +4,10 @@
 Student::Student() : Person("", "", "", 0, ""), AM(0), ECTS(0), semester(0), subjects({}){}
 
 //basic constructor
-Student::Student(const string in_name = " ", const string in_surname = " ", const string in_mail = " ", 
-const int in_age = 0, const int am = 0, const int ects = 0, const int sem = 0, map<Course*, double> sub = {}):
+Student::Student( map<Course*, double> &sub, const string in_name = " ", const string in_surname = " ", const string in_mail = " ", 
+const int in_age = 0, const int am = 0, const int ects = 0, const int sem = 0):
 Person(in_name, in_surname, in_mail, in_age, true),
-AM(am), ECTS(ects), semester(sem), subjects(sub){}
+AM(am), ECTS(ects), semester(sem), subjects(sub) {}
 
 //copy contructor
 Student::Student(Student& student):
@@ -48,6 +48,8 @@ Student& Student::operator-=(Course* course){
     auto check = subjects.find(course);             //add ECTS
     if (check != subjects.end()) 
         subjects.erase(check);
+    else
+        cerr<<"Not found\n";
         
     return *this;
 }
@@ -76,8 +78,10 @@ bool Student::gets_degree() const{
 
 bool Student::passed_course(Course* course){
     auto check = subjects.find(course);
-    if (check == subjects.end()) 
+    if (check == subjects.end()){
+        cout<<"Error\n";
         return false;
+    }
     if(subjects[course] >= 5)
         return true;
     return false;
@@ -91,23 +95,24 @@ double Student::course_grade(Course* course){
     return subjects[course];
 }
 
-void Student::edit(bool in_mail=0, bool in_age=0, bool in_am=0, bool in_ects=0, bool in_sem=0){
-    Person::edit(in_mail,in_age);
+void Student::edit(bool in_name=0, bool in_surname=0, bool in_mail=0, bool in_age=0, 
+bool in_am=0, bool in_ects=0, bool in_sem=0){
+    Person::edit(in_name,in_surname,in_mail,in_age);
     if(in_am){
         int in;
-        cout<<"Give the new AM"<<endl;
+        cout<<"Give the new AM: ";
         cin>>in;
         set_AM(in);
     }
     if(in_ects){
         int in;
-        cout<<"Give the new ects"<<endl;
+        cout<<"Give the new ects: ";
         cin>>in;
         set_ECTS(in);
     }
     if(in_sem){
         int in;
-        cout<<"Give the new semester"<<endl;
+        cout<<"Give the new semester: ";
         cin>>in;
         set_semester(in);
     }
@@ -124,4 +129,14 @@ void Student::show_courses(){
         cout<<cour->get_ECTS()<<" ";
         cout<<cour->is_mandatory()<<endl;
     }
+}
+
+ofstream& operator<<(ofstream& ofs, const Student& student){
+    ofs<<student.name << " "<< student.surname <<" "<<student.AM<< " ";
+    return ofs;
+}
+
+ostream& operator<<(ostream& os, const Student& student){
+    os<<student.name << " "<< student.surname <<" "<<student.AM<< " ";
+    return os;
 }

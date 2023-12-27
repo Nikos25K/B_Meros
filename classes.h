@@ -50,8 +50,9 @@ class Person{
         virtual Person& operator+=(Course* course);
         virtual Person& operator-=(Course* course);
 
-        virtual void edit(bool in_mail, bool in_age);
-        virtual void edit(bool in_mail, bool in_age, bool in_am, bool in_ects, bool in_sem);
+        virtual void edit(bool in_name, bool in_surname, bool in_mail, bool in_age);
+        virtual void edit(bool in_name, bool in_surname, bool in_mail, bool in_age,
+        bool in_am, bool in_ects, bool in_sem);
 
         virtual Person* clone();
 };
@@ -96,6 +97,20 @@ class Secretary{
 
         void show_courses();
 
+        void add_courses_to_person(Person* person);
+        void add_courses_to_person(Course* course);
+        void add_courses_to_person(Course* course, Person* per);
+        void add_courses_to_person(vector<Course*> vec, Person* per);
+
+        void delete_courses_from_person(Person* per);
+        void delete_courses_from_person(Course* course);
+        void delete_courses_from_person(Course* course, Person* per);
+
+        Person* get_person(string name, string surname);    //read and check
+        Course* get_course(string cour);
+
+        void create_course();
+        void create_person(bool flag);
 };
 
 class Student: public Person{
@@ -108,8 +123,8 @@ class Student: public Person{
 
 	public:
 		Student();
-		Student(const string in_name, const string in_surname, const string mail, 
-        const int in_age, const int am, const int ects, const int sem, map<Course*, double> sub);
+		Student(map<Course*, double> &sub, const string in_name, const string in_surname, const string mail, 
+        const int in_age, const int am, const int ects, const int sem);
 		Student(Student& student);
         ~Student();
 		
@@ -131,15 +146,14 @@ class Student: public Person{
 
         bool gets_degree() const;
 
-        virtual void edit(bool in_mail, bool in_age, bool in_am, bool in_ects, bool in_sem) override;
+        virtual void edit(bool in_name, bool in_surname, bool in_mail, bool in_age,
+        bool in_am, bool in_ects, bool in_sem) override;
 
         virtual Student* clone() override;
         void show_courses();
-        friend ostream& operator<<(ostream& os, const Student& student) {
-            os << "Name: " << student.name << "Surname: " << student.surname << ", Age: " << student.age;
-            os << "AM: " << student.AM << endl;
-            return os;
-        }
+
+        friend ofstream& operator<<(ofstream& ofs, const Student& student);
+        friend ostream& operator<<(ostream& os, const Student& student);
 };
 
 class Professor: public Person{
@@ -148,8 +162,7 @@ class Professor: public Person{
 
     public:
         Professor();
-        Professor(const string in_name, const string in_surname, const string in_mail,
-        const int in_age, vector<Course*> in_courses);
+        Professor(const string in_name, const string in_surname, const string in_mail, const int in_age);
         Professor(Professor& prof);
         ~Professor();
 
@@ -176,7 +189,7 @@ class Course{
     public:
         Course();
         Course(const string name, const int ects, bool mand, const int sem,
-        vector<Person*> in_people, const int in_passed, const int in_failed);
+        const int in_passed, const int in_failed);
         Course(Course *ptr);
         ~Course();
 

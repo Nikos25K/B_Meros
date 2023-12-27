@@ -105,23 +105,36 @@ Person& Person::operator-=(Course* course){
     return *this;
 }
 
-void Person::edit(bool in_mail=0, bool in_age=0){
+void Person::edit(bool in_name=0, bool in_surname=0, bool in_mail=0, bool in_age=0){
+    if(in_name){
+        string in_name;
+        cout<<"Give name: ";
+        cin>>in_name;
+        set_name(in_name);
+    }
+    if(in_surname){
+        string in_surname;
+        cout<<"Give surname: ";
+        cin>>in_surname;
+        set_surname(in_surname);
+    }
     if(in_mail){
         string in_mail;
-        cout<<"Give the new mail"<<endl;
+        cout<<"Give the new mail: ";
         cin>>in_mail;
         set_mail(in_mail);
     }
     if(in_age){
         int in_age;
-        cout<<"Give the new age"<<endl;
+        cout<<"Give the new age: ";
         cin>>in_age;
         check_num(in_age,18,80);
         set_age(in_age);
     }
 }
 
-void Person::edit(bool in_mail, bool in_age, bool in_am, bool in_ects, bool in_sem) {}
+void Person::edit(bool in_name=0, bool in_surname=0,bool in_mail=0, bool in_age=0, 
+bool in_am=0, bool in_ects=0, bool in_sem=0) {}
 
 Person* Person::clone(){
     return new Person(*this);

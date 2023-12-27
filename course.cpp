@@ -4,10 +4,10 @@
 Course::Course(): name(""), ECTS(0), mandatory(0), semester(0),
 people({}), passed(0), failed(0) {}
 
-Course::Course(const string nam="", const int ects=0, bool mand=0, const int sem=0,
-vector<Person*> in_people={}, const int in_passed=0, const int in_failed=0):
+Course::Course(const string nam="", const int ects=0, bool mand=0, const int sem=0, 
+const int in_passed=0, const int in_failed=0):
 name(nam), ECTS(ects), mandatory(mand), semester(sem),
-people(in_people), passed(in_passed), failed(in_failed) {}
+passed(in_passed), failed(in_failed) {}
 
 //constructor based on Course*
 Course::Course(Course *ptr) :name(ptr->get_name()), ECTS(ptr->get_ECTS()), mandatory(ptr->is_mandatory()),
@@ -117,11 +117,8 @@ Course& Course::operator-=(Person* per){
     auto check = find(people.begin(), people.end(), per);
     if (check != people.end())
         people.erase(check);
-    Student* stud = dynamic_cast<Student*>(per);
-    if(!stud){
-        cerr<<"Error casting"<<endl;
-        exit(1);
-    }
+    // else
+        //errpr
     return *this;
 }
 
@@ -149,6 +146,7 @@ bool sem=0, bool passed=0, bool failed=0){
         cout<<"Give the new semester"<<endl;
         cin>>in_sem;
         set_semester(in_sem);
+        //elenxos
     }
     if(passed){
         int in_passed;

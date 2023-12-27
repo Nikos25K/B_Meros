@@ -15,15 +15,15 @@ void check_num(int choice, int low, int upp);
 bool check_resp(bool numeric);
 void check_ptr(void* ptr);
 
-class Person;
-class Course;
-class Secretary;
+// class Person;
+// class Course;
+// class Secretary;
 
-Person* get_person(Secretary& sec, string name, string surname);
-Course* read_course(Secretary& sec, string cour);
-void add_courses(Secretary& sec, string name, string surname);
-void delete_courses(Secretary& sec, string name, string surname);
-void create_person(Secretary& sec, bool flag, string name, string surname);
-void create_course(Secretary& sec);
+// Person* get_person(Secretary& sec, string name, string surname);
+// Course* read_course(Secretary& sec, string cour);
+// void add_courses(Secretary& sec, string name, string surname);
+// void delete_courses(Secretary& sec, string name, string surname);
+// void create_person(Secretary& sec, bool flag, string name, string surname);
+// void create_course(Secretary& sec);
 
 #endif

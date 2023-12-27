@@ -24,8 +24,12 @@ Secretary::Secretary(Secretary& secretary){
 Secretary::~Secretary(){
     for (Person* person : data) 
         delete person;
+    for(Course* course: courses)
+        delete course;
 
     data.clear();
+    courses.clear();
+
 }
 
 vector<Person*> Secretary::get_data(){
@@ -162,4 +166,120 @@ void Secretary::show_courses(){
         cout<<cour->get_ECTS()<<" ";
         cout<<cour->is_mandatory()<<endl;
     }
+}
+
+void Secretary::add_courses_to_person(Course* course, Person* per){
+    *course += per;
+    *per += course;
+}
+
+void Secretary::add_courses_to_person(vector<Course*> vec, Person* per){
+    for(Course* course : vec)
+        add_courses_to_person(course, per); 
+}
+
+void Secretary::add_courses_to_person(Course* course){
+    while(1){
+        Person* per = this->get_person("","");    //reads
+        this->add_courses_to_person(course, per);
+        cout << "Do you want to add another? (y/n)"<<endl;
+        bool answer = check_resp(0);
+        if(!answer)
+            break;
+    }
+}           //maybe one?????????????????????????
+
+void Secretary::add_courses_to_person(Person* per){
+    while(1){
+        Course* course = this->get_course("");    //reads
+        this->add_courses_to_person(course, per);
+        cout << "Do you want to add another? (y/n)"<<endl;
+        bool answer = check_resp(0);
+        if(!answer)
+            break;
+    }
+}
+
+void Secretary::delete_courses_from_person(Course* course, Person* per){
+    *per -= course;
+    *course -= per;
+}
+
+void Secretary::delete_courses_from_person(Person* per){
+    while(1){
+        Course* course = this->get_course("");    //reads
+        this->delete_courses_from_person(course, per);
+        cout << "Do you want to delete another? (y/n)"<<endl;
+        bool answer = check_resp(0);
+        if(!answer)
+            break;
+    }
+}
+
+void Secretary::delete_courses_from_person(Course* course){
+    while(1){
+        Person* per = this->get_person("","");    //reads
+        this->delete_courses_from_person(course, per);
+        cout << "Do you want to delete another? (y/n)"<<endl;
+        bool answer = check_resp(0);
+        if(!answer)
+            break;
+    }
+}
+
+Person* Secretary::get_person(string name="", string surname=""){
+    if(name == ""){
+        cout<<"Give name"<<endl;
+        cin >> name;
+    }
+    if(surname == ""){
+        cout<<"Give surname"<<endl;
+        cin >> surname;
+    }
+    Person* p = find(name, surname);
+    check_ptr(p);
+    return p;
+}
+
+Course* Secretary::get_course(string cour=""){      //exists, so will not crash
+    if(cour == ""){
+        cout<<"Give the course"<<endl;
+        cin>>cour;
+    }
+    Course* course = find(cour);
+    check_ptr(course);
+    return course;
+}
+
+void Secretary::create_course(){
+    Course course;
+    course.edit(1,1,1,1,1,1);
+    cout<<"Do you want to give people? (Y/N)"<<endl;
+    bool answer = check_resp(0);
+    if(answer)
+        add_courses_to_person(&course);
+    *this+= &course;
+
+}
+
+void Secretary::create_person(bool flag){
+    Person* per;
+    if(flag){
+        per = new Student;
+        per->edit(1,1,1,1,1,1,1);
+    }
+    else{
+        per = new Professor;
+        per->edit(1,1,1,1);
+    }
+    check_ptr(per);     //if error allocating
+
+    per->set_type(flag);
+    cout<<"Do you want to give courses? (Y/N)"<<endl;
+    bool answer = check_resp(0);
+    if(answer)
+        this->add_courses_to_person(per);
+
+    *this += per;    
+    delete per;
 }
