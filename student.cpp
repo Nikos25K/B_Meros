@@ -39,7 +39,6 @@ void Student::set_semester(int sem){
 }
 
 Student& Student::operator+=(Course* course){
-    // subjects[course] = 0.0;
     subjects.insert(make_pair(course,0.0));
     return *this;
 }

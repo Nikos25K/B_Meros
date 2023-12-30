@@ -15,13 +15,13 @@ vector<Course*> Professor::get_courses(){
 }
 
 Professor& Professor::operator+=(Course* course){
-    courses.push_back(new Course(*course));
+    courses.push_back(course);
     return *this;
 }
 
 Professor& Professor::operator-=(Course* course) {
     auto check = find(courses.begin(), courses.end(), course);
-    if (check != courses.end()) 
+    if (check != courses.end())
         courses.erase(check);
         
     return *this;

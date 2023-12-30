@@ -220,6 +220,7 @@ int main(){
         else if (choice == 4 || choice == 5){
             Course* course = sec.get_course("");
             Person* p = sec.get_person("","");
+            /////////////////check if choice and prof or student
             while(1){
                     sec.add_courses_to_person(course, p);
 
@@ -227,8 +228,10 @@ int main(){
                 bool answer = check_resp(0);
                 if(!answer)
                     break;
-                if(choice == 4)     //set profs
+                if(choice == 4){     //set profs
                     p = sec.get_person("","");
+                    //////////////////////check if professor
+                }
                 else                //add another course to student
                     course = sec.get_course("");
             }
@@ -259,6 +262,7 @@ int main(){
         }
         else if (choice == 7){
             Person* p = sec.get_person("","");
+            //////////////////////check if student
             Professor* prof = dynamic_cast<Professor*>(p);          //check for func
             check_ptr(prof);
             vector<Course*> vec = prof->get_courses();
@@ -270,6 +274,7 @@ int main(){
         }
         else if (choice == 8){
             Person* p = sec.get_person("","");
+            //////////////////////check if professor
             Student* student = dynamic_cast<Student*>(p); 
             check_ptr(student);
             cout<< student->get_AM()<<endl;
@@ -308,6 +313,10 @@ int main(){
     // Person* per = sec.find("Anastasia","Lygizou");
     Course* c = sec.find("Cryptography");
     check_ptr(c);
+    // Person* per = sec.find("Nikolaos", "Kyriakakos");
+    // check_ptr(per);
+    // *c += per;
+    // *c -= per;
     vector<Person*> vec = c->get_people();
     for(Person* per: vec)
         cout<<*per;

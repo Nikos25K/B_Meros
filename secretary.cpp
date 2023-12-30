@@ -102,7 +102,7 @@ istream &operator>>(istream &str, Secretary &secretary){
 //given a name and surname checks if inside
 Person* Secretary::find(const string in_name, const string in_surname){
     for(Person* person: data)
-        if(in_name == person->get_name() && 
+        if(in_name == person->get_name() &&
            in_surname == person->get_surname())
             return person;
     return NULL;
@@ -236,7 +236,7 @@ Person* Secretary::get_person(string name="", string surname=""){
         cout<<"Give surname"<<endl;
         cin >> surname;
     }
-    Person* p = find(name, surname);
+    Person* p = this->find(name, surname);
     check_ptr(p);
     return p;
 }

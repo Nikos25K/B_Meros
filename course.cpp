@@ -94,31 +94,34 @@ double Course::get_avg_grade(){
 
 Course& Course::operator+=(Person* per){
     if(per->get_type()){        
-        Student* stud = dynamic_cast<Student*>(per);
-        if(!stud){
-            cerr<<"Error casting hereeeeeee"<<endl;
-            exit(1);
-        }
-        people.push_back(new Student(*stud));
+        // Student* stud = dynamic_cast<Student*>(per);
+        // if(!stud){
+        //     cerr<<"Error casting hereeeeeee"<<endl;
+        //     exit(1);
+        // }
+        people.push_back(per);
+        // people.push_back(new Student(*stud));
     }
     else{
-        Professor* prof = dynamic_cast<Professor*>(per);
-        if(!prof){
-            cerr<<"Error casting"<<endl;
-            exit(1);
-        }
-        people.push_back(new Professor(*prof));
+        // Professor* prof = dynamic_cast<Professor*>(per);
+        // if(!prof){
+        //     cerr<<"Error casting"<<endl;
+        //     exit(1);
+        // }
+        people.push_back(per);
+        // people.push_back(new Professor(*prof));
     }
 
     return *this;
 }
 
 Course& Course::operator-=(Person* per){
+
     auto check = find(people.begin(), people.end(), per);
     if (check != people.end())
-        people.erase(check);
-    // else
-        //errpr
+        this->people.erase(check);
+    else
+        cerr << "Error: Person not found in the course." << endl;
     return *this;
 }
 
