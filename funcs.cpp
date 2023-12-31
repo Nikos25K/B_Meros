@@ -24,7 +24,9 @@ void check_open(ofstream& fout){
 
 int count_lines(string name){
     ifstream fin(name);
-    check_open(fin);
+    // check_open(fin);
+    if(!fin.is_open())
+        throw Err_Rpt("Error counting lines of" + name + "\n");
     int count=0;
     string line;
     while(getline(fin, line))       //counts lines of file

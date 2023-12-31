@@ -41,7 +41,6 @@ int Course::get_failed() const{
     return failed;
 }
 
-
 void Course::set_name(string nam=""){
     name = nam;
 }
@@ -65,12 +64,6 @@ void Course::set_professors(vector<Professor*> in_profs){
     for(Professor* prof_ptr : in_profs)
         people.push_back(prof_ptr);
 }
-void Course::incr_passed(void){
-    passed++;
-}
-void Course::incr_failed(void){
-    failed++;
-}
 
 double Course::get_avg_grade(){
     double sum=0.0;
@@ -79,13 +72,16 @@ double Course::get_avg_grade(){
         if(!per->get_type())     //Students only
             continue;
         count++;
-        Student* stud = dynamic_cast<Student*>(per);
-        if(!stud){
-            cerr<<"Error casting"<<endl;
+        Student* student;
+        try{
+            student = dynamic_cast<Student*>(per);
+            throw Err_Rpt("Error casting to student\n");
+        }
+        catch(Err_Rpt& err){
+            cerr<<err.msg;
             exit(1);
         }
-        sum += stud->course_grade(this);
-
+        sum += student->course_grade(this);
     }
     if(count)
         return sum/count;
@@ -116,12 +112,17 @@ Course& Course::operator+=(Person* per){
 }
 
 Course& Course::operator-=(Person* per){
-
-    auto check = find(people.begin(), people.end(), per);
-    if (check != people.end())
-        this->people.erase(check);
-    else
-        cerr << "Error: Person not found in the course." << endl;
+    vector<Person*>::iterator check;
+    try{
+        check = find(people.begin(), people.end(), per);
+        if (check == people.end())
+            throw Err_Rpt("Person not found\n");
+    }
+    catch(Err_Rpt& err){
+        cerr<<err.msg;
+        exit(1);        
+    }
+    this->people.erase(check);
     return *this;
 }
 

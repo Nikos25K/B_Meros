@@ -61,6 +61,8 @@ void Person::set_mail(string in_mail){
     mail = in_mail;
 }
 void Person::set_age(int in_age){
+    if(in_age < 18 || in_age > 80)
+        throw Err_Rpt("Error: Invalid age\n");
     age = in_age;
 }
 void Person::set_type(bool in_type){
@@ -128,8 +130,13 @@ void Person::edit(bool in_name=0, bool in_surname=0, bool in_mail=0, bool in_age
         int in_age;
         cout<<"Give the new age: ";
         cin>>in_age;
-        check_num(in_age,18,80);
-        set_age(in_age);
+        try{
+            set_age(in_age);
+        }
+        catch(Err_Rpt& err){
+            cerr<<err.msg;
+            exit(1);
+        }
     }
 }
 

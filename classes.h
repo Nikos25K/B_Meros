@@ -8,7 +8,8 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-
+#include <new>
+#include <iomanip>
 
 using namespace std;
 
@@ -64,18 +65,13 @@ class Secretary{
 
     public:
         Secretary();
-        Secretary(vector<Person> in_vec);     //constructors based on vectors
         Secretary(vector<Person*> in_vec);
         Secretary(Secretary& secretary);
         ~Secretary();
 
-        vector<Person*> get_data();
+        vector<Person*> get_people();
+        vector<Course*> get_courses();
         int get_count() const;
-
-        Secretary& operator+(Person person);     //adds Person or Person*
-        Secretary& operator+(Person* person);
-        Secretary& operator+=(Person person);
-        Secretary& operator+=(Person* person);
 
         Secretary &operator=(Secretary secretary);
 
@@ -88,6 +84,7 @@ class Secretary{
 
         vector<Student*> students_graduate();
 
+        Secretary& operator+=(Person* person);
         Secretary& operator-=(Person* person);
 
         Secretary& operator+=(Course* course);
@@ -211,9 +208,6 @@ class Course{
 
         void set_professors(vector<Professor*> in_profs);
 
-        void incr_passed();
-        void incr_failed();
-
         double get_avg_grade();
 
         Course& operator+=(Person* per);
@@ -221,5 +215,12 @@ class Course{
 
         void edit(bool name, bool ects, bool mand, bool sem, bool passed, bool failed);
 };
+
+class Err_Rpt{
+    public:
+        string msg;
+        Err_Rpt(string in_msg): msg(in_msg) {}
+};
+
 
 #endif

@@ -20,10 +20,17 @@ Professor& Professor::operator+=(Course* course){
 }
 
 Professor& Professor::operator-=(Course* course) {
-    auto check = find(courses.begin(), courses.end(), course);
-    if (check != courses.end())
-        courses.erase(check);
-        
+    vector<Course*>::iterator check;
+    try{
+        check = find(courses.begin(), courses.end(), course);
+        if (check == courses.end())
+            throw Err_Rpt("Course not found\n");
+    }
+    catch(Err_Rpt& err){
+        cerr<<err.msg;
+        exit(1);
+    }
+    courses.erase(check);
     return *this;
 }
 

@@ -1,6 +1,7 @@
-OOP 8 mandatory 3 Triantafyllia Papadogianni Nikolaos Kyriakakos Anastasia Lygizou Spyros Xergias
-ANAlysis_2 8 mandatory 3
-Artificial_Intelligence 6 non_mandatory 5
-Data_Structures 7 mandatory 2
-Applied_Maths 6 non_mandatory 2
-Cryptography 6 non_mandatory 8
+Name                          ECTS      Mandatory      Semester  
+OOP                           8         Yes            3         
+ANAlysis_2                    8         Yes            3         
+Artificial_Intelligence       6         No             5         
+Data_Structures               7         Yes            2         
+Applied_Maths                 6         No             2         
+Cryptography                  6         No             8         

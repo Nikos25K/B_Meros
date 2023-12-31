@@ -3,22 +3,29 @@
 
 Secretary::Secretary(): data({}) {}
 
-//in case initialized with a vec of Person
-Secretary::Secretary(vector<Person> in_vec){
-    for(Person per: in_vec)
-        data.push_back(new Person(&per));
-}
-
 //in case initialized with a vec of Person*
 Secretary::Secretary(vector<Person*> in_vec){
-    for(Person* per: in_vec)
-        data.push_back(new Person(per));
+    for(Person* per: in_vec){
+        *this += per;
+    }
 }
 
 //copy constructor
 Secretary::Secretary(Secretary& secretary){
-    for(Person* per: secretary.get_data())
-        data.push_back(new Person(per));
+    // for(Person* per: secretary.get_people())
+    //     data.push_back(new Person(per));
+    for(Person* per: secretary.get_people()){
+        *this += per;
+        // Person* person;
+        // try{
+        //     person = new Person(per);
+        // }
+        // catch(bad_alloc& e){
+        //     cerr<<"Error allocating memory\n";
+        //     exit(1);
+        // }
+        // data.push_back(person);
+    }
 }
 
 Secretary::~Secretary(){
@@ -32,36 +39,30 @@ Secretary::~Secretary(){
 
 }
 
-vector<Person*> Secretary::get_data(){
+vector<Person*> Secretary::get_people(){
     return data;
+}
+
+vector<Course*> Secretary::get_courses(){
+    return courses;
 }
 
 int Secretary::get_count() const{
     return data.size();
 }
-//in case of adding Person
-Secretary& Secretary::operator+(Person person){
-    data.push_back(new Person(person));
-    return *this;
-}
 
-//in case of adding Person*
-Secretary& Secretary::operator+(Person* person){
-    // data.push_back(new Person(*person));
-    data.push_back(person->clone());
-    return *this;
-}
-
-//in case of adding Person
-Secretary& Secretary::operator+=(Person person) {
-    data.push_back(new Person(person));
-    return *this;
-}
-
-//in case of adding Person*
 Secretary& Secretary::operator+=(Person* person) {
     // data.push_back(new Person(*person));
     data.push_back(person->clone());
+    // Person* per;
+    // try{
+    //     per = new Person(person);
+    // }
+    // catch(bad_alloc& e){
+    //     cerr<<"Error allocating memory\n";
+    //     exit(1);
+    // }
+    // data.push_back(per);
     return *this;
 }
 
@@ -72,8 +73,9 @@ Secretary& Secretary::operator=(Secretary secretary){
         delete person;
     data.clear();
 
-    for (Person* person : secretary.data) 
-        data.push_back(new Person(*person));
+    for (Person* person : secretary.data)
+    *this += person;
+        // data.push_back(new Person(*person));
 
     return *this;
 }
@@ -87,14 +89,14 @@ ostream &operator<<(ostream &str, Secretary &secretary){
 
 istream &operator>>(istream &str, Secretary &secretary){
     int num;
-    cout<<"Give number of persons:";
+    cout<<"Give number of people:";
     str>>num;
 
     for(int i=0;i<num;i++){
         cout<<"Give data of person "<<i+1<<":"<<endl;
         Person person;
         str>> person;
-        secretary = secretary + person;
+        secretary += &person;
     }
     return str;
 }
@@ -105,11 +107,7 @@ Person* Secretary::find(const string in_name, const string in_surname){
         if(in_name == person->get_name() &&
            in_surname == person->get_surname())
             return person;
-    return NULL;
-}
-//given a Person
-Person* Secretary::find(Person person){
-    return find(person.get_name(), person.get_surname());
+    throw Err_Rpt("Error: Person not found\n");
 }
 
 //given a Person*
@@ -122,9 +120,16 @@ vector<Student*> Secretary::students_graduate(){
     for(Person* person : data){
         if(!person->get_type())     //skips professors
             continue;
-        Student* student = dynamic_cast<Student*>(person); 
-        if(!student)
+        Student* student;
+        try{
+            student = dynamic_cast<Student*>(person);
+            if(!student)
+                throw Err_Rpt("Error casting to student\n");
+        }
+        catch(Err_Rpt& err){
+            cerr<<err.msg;
             exit(1);
+        }
         if(student->gets_degree())
             degreeee.push_back(student);
     }
@@ -141,7 +146,15 @@ Secretary& Secretary::operator-=(Person* person){
 }
 
 Secretary& Secretary::operator+=(Course* course){
-    courses.push_back(new Course(*course));
+    Course* cour;
+    try{
+        cour = new Course(course);
+    }
+    catch(bad_alloc& e){
+        cerr<<"Error allocating memory\n";
+        exit(1);
+    }
+    courses.push_back(cour);
     return *this;
 }
 
@@ -157,7 +170,7 @@ Course* Secretary::find(string in_name){
     for(Course* curr : courses)
         if(in_name == curr->get_name())
             return curr;
-    return NULL;
+    throw Err_Rpt("Error: Course not found\n");
 }
 
 void Secretary::show_courses(){
@@ -175,7 +188,7 @@ void Secretary::add_courses_to_person(Course* course, Person* per){
 
 void Secretary::add_courses_to_person(vector<Course*> vec, Person* per){
     for(Course* course : vec)
-        add_courses_to_person(course, per); 
+        add_courses_to_person(course, per);
 }
 
 void Secretary::add_courses_to_person(Course* course){
@@ -236,8 +249,14 @@ Person* Secretary::get_person(string name="", string surname=""){
         cout<<"Give surname"<<endl;
         cin >> surname;
     }
-    Person* p = this->find(name, surname);
-    check_ptr(p);
+    Person* p;
+    try{
+        p = this->find(name, surname);
+    }
+    catch(Err_Rpt& err){
+        cerr<<err.msg;
+        exit(1);        
+    }
     return p;
 }
 
@@ -246,40 +265,71 @@ Course* Secretary::get_course(string cour=""){      //exists, so will not crash
         cout<<"Give the course"<<endl;
         cin>>cour;
     }
-    Course* course = find(cour);
-    check_ptr(course);
+    Course* course;
+    try{
+        course = find(cour);
+    }
+    catch(Err_Rpt& err){
+        cerr<<err.msg;
+        exit(1);        
+    }
     return course;
 }
 
 void Secretary::create_course(){
     Course course;
     course.edit(1,1,1,1,1,1);
-    cout<<"Do you want to give people? (Y/N)"<<endl;
-    bool answer = check_resp(0);
-    if(answer)
-        add_courses_to_person(&course);
-    *this+= &course;
-
+    try{
+        find(course.get_name());
+    }
+    catch(bad_alloc& e){        //error == not in sec, so add
+        cout<<"Do you want to give people? (Y/N)"<<endl;
+        bool answer = check_resp(0);
+        if(answer)
+            add_courses_to_person(&course);
+        *this+= &course;
+    }
+    cerr<<"Error: Course already exists\n";
+    exit(1);
 }
 
 void Secretary::create_person(bool flag){
     Person* per;
     if(flag){
-        per = new Student;
+        try{
+            per = new Student;
+        }
+        catch(bad_alloc& e){
+            cerr<<"Error allocating memory\n";
+            exit(1);
+        }
         per->edit(1,1,1,1,1,1,1);
     }
     else{
-        per = new Professor;
+        try{
+            per = new Professor;
+        }
+        catch(bad_alloc& e){
+            cerr<<"Error allocating memory\n";
+            exit(1);
+        }
         per->edit(1,1,1,1);
     }
-    check_ptr(per);     //if error allocating
 
-    per->set_type(flag);
-    cout<<"Do you want to give courses? (Y/N)"<<endl;
-    bool answer = check_resp(0);
-    if(answer)
-        this->add_courses_to_person(per);
-
-    *this += per;    
+    try{
+        find(per->get_name(), per->get_surname());
+    }
+    catch(Err_Rpt& err){        //error == not in sec, so add
+        per->set_type(flag);
+        cout<<"Do you want to give courses? (Y/N)"<<endl;
+        bool answer = check_resp(0);
+        if(answer)
+            this->add_courses_to_person(per);
+        *this += per;
+        delete per;
+        return;
+    }
     delete per;
+    cerr<<"Error: Person already exists\n";
+    exit(1);
 }

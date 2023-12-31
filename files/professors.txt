@@ -1,2 +1,3 @@
-Anastasia Lygizou lygizou@di.uoa.gr 28 OOP
-Spyros Xergias xergias@di.uoa.gr 32 Computer_Archit
+Name                          Mail                     Age       
+Anastasia Lygizou             lygizou@di.uoa.gr        28        
+Spyros Xergias                xergias@di.uoa.gr        32        
