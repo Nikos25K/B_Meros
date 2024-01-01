@@ -73,14 +73,9 @@ double Course::get_avg_grade(){
             continue;
         count++;
         Student* student;
-        try{
-            student = dynamic_cast<Student*>(per);
+        student = dynamic_cast<Student*>(per);
+        if(!student)
             throw Err_Rpt("Error casting to student\n");
-        }
-        catch(Err_Rpt& err){
-            cerr<<err.msg;
-            exit(1);
-        }
         sum += student->course_grade(this);
     }
     if(count)
@@ -89,39 +84,15 @@ double Course::get_avg_grade(){
 }
 
 Course& Course::operator+=(Person* per){
-    if(per->get_type()){        
-        // Student* stud = dynamic_cast<Student*>(per);
-        // if(!stud){
-        //     cerr<<"Error casting hereeeeeee"<<endl;
-        //     exit(1);
-        // }
-        people.push_back(per);
-        // people.push_back(new Student(*stud));
-    }
-    else{
-        // Professor* prof = dynamic_cast<Professor*>(per);
-        // if(!prof){
-        //     cerr<<"Error casting"<<endl;
-        //     exit(1);
-        // }
-        people.push_back(per);
-        // people.push_back(new Professor(*prof));
-    }
-
+    people.push_back(per);
     return *this;
 }
 
 Course& Course::operator-=(Person* per){
     vector<Person*>::iterator check;
-    try{
-        check = find(people.begin(), people.end(), per);
-        if (check == people.end())
-            throw Err_Rpt("Person not found\n");
-    }
-    catch(Err_Rpt& err){
-        cerr<<err.msg;
-        exit(1);        
-    }
+    check = find(people.begin(), people.end(), per);
+    if (check == people.end())
+        throw Err_Rpt("Person not found\n");
     this->people.erase(check);
     return *this;
 }
@@ -150,7 +121,6 @@ bool sem=0, bool passed=0, bool failed=0){
         cout<<"Give the new semester"<<endl;
         cin>>in_sem;
         set_semester(in_sem);
-        //elenxos
     }
     if(passed){
         int in_passed;

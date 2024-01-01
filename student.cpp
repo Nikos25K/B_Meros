@@ -45,17 +45,11 @@ Student& Student::operator+=(Course* course){
 
 Student& Student::operator-=(Course* course){
     map<Course*, double>::iterator check;
-    try{
-        check = subjects.find(course);
-        if (check == subjects.end())
-            throw Err_Rpt("Course not found\n");
-    }
-    catch(Err_Rpt& err){
-        cerr<<err.msg;
-        exit(1);
-    }
-    subjects.erase(check);
+    check = subjects.find(course);
+    if (check == subjects.end())
+        throw Err_Rpt("Course not found\n");
 
+    subjects.erase(check);
     return *this;
 }
 
@@ -82,31 +76,17 @@ bool Student::gets_degree() const{
 }
 
 bool Student::passed_course(Course* course){
-    try{
-        auto check = subjects.find(course);
-        if (check == subjects.end())
-            throw Err_Rpt("Course not found\n");
-    }
-    catch(Err_Rpt& err){
-        cerr<<err.msg;
-        exit(1);
-    }
-    if(subjects[course] >= 5)
-        return true;
-    return false;
-    // return subjects[course] >= 5 ? true : false;
+    auto check = subjects.find(course);
+    if (check == subjects.end())
+        throw Err_Rpt("Course not found\n");
+
+    return subjects[course] >= 5 ? true : false;
 }
 
 double Student::course_grade(Course* course){
-    try{
-        auto check = subjects.find(course);
-        if (check == subjects.end())
-            throw Err_Rpt("Course not found\n");
-    }
-    catch(Err_Rpt& err){
-        cerr<<err.msg;
-        exit(1);
-    }
+    auto check = subjects.find(course);
+    if (check == subjects.end())
+        throw Err_Rpt("Course not found\n");
     return subjects[course];
 }
 

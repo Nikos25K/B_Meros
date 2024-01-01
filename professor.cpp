@@ -21,19 +21,15 @@ Professor& Professor::operator+=(Course* course){
 
 Professor& Professor::operator-=(Course* course) {
     vector<Course*>::iterator check;
-    try{
-        check = find(courses.begin(), courses.end(), course);
-        if (check == courses.end())
-            throw Err_Rpt("Course not found\n");
-    }
-    catch(Err_Rpt& err){
-        cerr<<err.msg;
-        exit(1);
-    }
+    check = find(courses.begin(), courses.end(), course);
+    if (check == courses.end())
+        throw Err_Rpt("Course not found\n");
+
     courses.erase(check);
     return *this;
 }
 
 Professor* Professor::clone(){
-    return new Professor(*this);
+    Professor* pr = new Professor(*this);
+    return pr;
 }

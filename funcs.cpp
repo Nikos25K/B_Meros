@@ -26,7 +26,7 @@ int count_lines(string name){
     ifstream fin(name);
     // check_open(fin);
     if(!fin.is_open())
-        throw Err_Rpt("Error counting lines of" + name + "\n");
+        throw Err_Rpt("Error: Could not open file: " + name + "\n");
     int count=0;
     string line;
     while(getline(fin, line))       //counts lines of file
@@ -43,20 +43,19 @@ void check_num(int choice, int low, int upp){    //bounds check
 }
 
 bool check_resp(bool numeric){       //to check yes/no
+    string resp="init";
     if(!numeric){    //char
-        char resp;
-        while(resp != 'y' && resp != 'Y' && resp != 'n' && resp != 'N')
+        while(resp != "y" && resp != "Y" && resp != "n" && resp != "N")
             cin>>resp;
-        if(resp == 'y' || resp == 'Y')
-            return true;
-        return false;
+        return (resp == "y" || resp == "Y");
     }
-    int resp;
-    while(resp != 1 && resp != 0)
+    int choice = 2;
+    do{
         cin>>resp;
-    if(resp)
-        return true;
-    return false;
+        choice = std::stoi(resp);   //if exception will be handled in end
+    }while(choice != 1 && choice != 0);
+    
+    return choice;
 }
 
 void check_ptr(void* ptr){
