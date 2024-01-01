@@ -1,4 +1,4 @@
-#include "funcs.h"
+#include "utils.h"
 #include "people.h"
 #include "sec_course.h"
 
@@ -333,12 +333,6 @@ int main(){
         exit(1);
     }
 
-    cout<<"HI\n";
-    Person* perrr = sec.find("Triantafyllia", "Papadogianni");
-    Student* sss = dynamic_cast<Student*>(perrr);
-    sss->show_courses();
-
-    
     try{
         fout.open("files/courses.txt",ios::trunc);
         if(!fout.is_open())

@@ -1,4 +1,4 @@
-#include "funcs.h"
+#include "utils.h"
 
 int count_lines(string name){
     ifstream fin(name);

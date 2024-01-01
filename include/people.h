@@ -1,7 +1,7 @@
 #ifndef PEOPLE_H
 #define PEOPLE_H
 
-#include "funcs.h"
+#include "utils.h"
 
 class Person{
     protected:

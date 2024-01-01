@@ -1,5 +1,5 @@
-#ifndef FUNCS_H
-#define FUNCS_H
+#ifndef UTILS_H
+#define UTILS_H
 
 #include <iostream>
 #include <fstream>

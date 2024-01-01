@@ -1,7 +1,7 @@
 #ifndef SEC_COURSES_H
 #define SEC_COURSES_H
 
-#include "funcs.h"
+#include "utils.h"
 
 class Secretary{
     private:

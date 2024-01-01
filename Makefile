@@ -6,8 +6,13 @@ INCLUDE = include
 CXXFLAGS = -g -std=c++11 -Wall -I$(INCLUDE)
 
 # Source files
-SRCS =  main2.cpp person.cpp secretary.cpp student.cpp course.cpp professor.cpp funcs.cpp
-# SRCS =  main.cpp person.cpp secretary.cpp student.cpp course.cpp professor.cpp funcs.cpp
+SRCS =  src/main.cpp \
+		src/people/person.cpp \
+		src/sec_course/secretary.cpp \
+		src/people/student.cpp \
+		src/sec_course/course.cpp \
+		src/people/professor.cpp \
+		src/utils.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)
