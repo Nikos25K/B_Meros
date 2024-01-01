@@ -94,6 +94,8 @@ class Course{
         Course& operator-=(Person* per);
 
         void edit(bool name, bool ects, bool mand, bool sem, bool passed, bool failed);
+
+        friend ofstream& operator<<(ofstream& ofs, const Course& course);
 };
 
 #endif

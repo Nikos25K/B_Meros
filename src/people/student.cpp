@@ -91,21 +91,24 @@ void Student::edit(bool in_name=0, bool in_surname=0, bool in_mail=0, bool in_ag
 bool in_am=0, bool in_ects=0, bool in_sem=0){
     Person::edit(in_name,in_surname,in_mail,in_age);
     if(in_am){
-        int in;
+        string temp;
         cout<<"Give the new AM: ";
-        cin>>in;
+        cin>>temp;
+        int in = std::stoi(temp);
         set_AM(in);
     }
     if(in_ects){
-        int in;
+        string temp;
         cout<<"Give the new ects: ";
-        cin>>in;
+        cin>>temp;
+        int in = std::stoi(temp);
         set_ECTS(in);
     }
     if(in_sem){
-        int in;
+        string temp;
         cout<<"Give the new semester: ";
-        cin>>in;
+        cin>>temp;
+        int in = std::stoi(temp);
         set_semester(in);
     }
 }
@@ -122,7 +125,12 @@ Student* Student::clone(){
 }
 
 ofstream& operator<<(ofstream& ofs, const Student& student){
-    ofs<<student.name << " "<< student.surname <<" "<<student.AM<< " ";
+    ofs << setw(30) << student.get_name() + " " + student.get_surname();
+    ofs << setw(15) << student.get_AM();
+    ofs << setw(25) << student.get_mail();
+    ofs << setw(10) << student.get_age();
+    ofs << setw(10) << student.get_ECTS();
+    ofs << setw(10) << student.get_semester();
     return ofs;
 }
 

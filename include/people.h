@@ -32,7 +32,8 @@ class Person{
         void set_age(int in_age);
         void set_type(bool in_type);
 
-        friend ostream &operator<<(ostream &left, const Person person);
+        friend ostream &operator<<(ostream &left, Person person);
+        friend ofstream &operator<<(ofstream &ofs, Person person);
         friend istream &operator>>(istream &in, Person &person);
 
         virtual Person& operator+=(Course* course);
@@ -104,7 +105,6 @@ class Professor: public Person{
         virtual Professor& operator-=(Course* course) override;
 
         virtual Professor* clone() override;
-
 };
 
 #endif

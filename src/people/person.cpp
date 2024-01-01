@@ -81,6 +81,13 @@ ostream &operator<<(ostream &str, Person person){
     return str;
 }
 
+ofstream &operator<<(ofstream &ofs, Person person){
+    ofs << setw(30) << person.get_name() + " " + person.get_surname();
+    ofs << setw(25) << person.get_mail();
+    ofs << setw(10) << person.get_age()<<endl;    
+    return ofs;    
+}
+
 istream &operator>>(istream &str, Person &person){
     cout<<"Give name:";
     str>>person.name;
@@ -127,9 +134,10 @@ void Person::edit(bool in_name=0, bool in_surname=0, bool in_mail=0, bool in_age
         set_mail(in_mail);
     }
     if(in_age){
-        int in_age;
+        string temp;
         cout<<"Give the new age: ";
-        cin>>in_age;
+        cin>>temp;
+        int in_age = std::stoi(temp);
         set_age(in_age);
     }
 }

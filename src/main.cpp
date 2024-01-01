@@ -134,7 +134,7 @@ int main(){
                 Person* person;
                 cin>>x;
                 if(x != "add" && x != "edit" && x != "delete")
-                    throw Err_Rpt("Error: Not valid option(add/edit/delete)\n","main.cpp","136");                                    
+                    throw Err_Rpt("Error: Not valid option(add/edit/delete)\n","main.cpp","136");
                 if(x != "add"){
                         person =sec.get_person("","");     //reads
                     if(person->get_type() && choice == 1)
@@ -146,7 +146,7 @@ int main(){
                     sec.create_person(0);
                 else if(x == "add" && choice == 2)  //create stud
                     sec.create_person(1);
-                else if (x == "edit"){
+                if (x == "edit"){
                     cout<<"Do you want to change the mail? (y,n)"<<endl;
                     bool t_mail = check_resp(0);
                     cout<<"Do you want to change the age? (y,n)"<<endl;
@@ -176,7 +176,7 @@ int main(){
                     else if(flag_courses && t_courses)
                         sec.delete_courses_from_person(person);
                 }
-                else 
+                else if(x == "delete")
                     sec -= person;
             }
             else if (choice == 3){
@@ -245,13 +245,19 @@ int main(){
             }        
             else if (choice == 6){
                 Course* course = sec.get_course("");
-                string file_to_open = "Results_"+course->get_name() + ".txt";
+                string file_to_open = "files/Results_"+course->get_name() + ".txt";
                 vector<Person*> people = sec.get_people();
 
                 fout.open(file_to_open);
-                if(!fin.is_open())
-                    throw Err_Rpt("Error opening file 'professors.txt'\n","main.cpp","253");
-                fout<<"The students that passed "<<course->get_name()<<" are:"<<endl<<endl;            
+                if(!fout.is_open())
+                    throw Err_Rpt("Error opening file to write results\n","main.cpp","253");
+                fout << left << setw(30) << "Name";
+                fout << left << setw(15) << "AM";
+                fout << left << setw(25) << "Mail";
+                fout << left << setw(10) << "Age";
+                fout << left << setw(10) << "ECTS";
+                fout << left << setw(10) << "Semester";
+                fout << left << setw(10) << "Grade" << endl;
                 for(Person* per: people){
                     if(!per->get_type())
                         continue;
@@ -260,7 +266,7 @@ int main(){
                         throw Err_Rpt("Error casting to student\n","main.cpp","260");
                     if(student->passed_course(course)){
                         fout << *student;
-                        fout << student->course_grade(course)<<endl;
+                        fout << left << setw(10) <<student->course_grade(course) << endl;
                     }
                 }
                 fout.close();
@@ -322,15 +328,12 @@ int main(){
     catch(Err_Rpt& err){
         cerr<<err.msg;
         cerr<<"Error occured in " + err.file_name + " in line "+ err.line<<"\n";
-        exit(1);
     }
     catch(bad_alloc& err){
         cerr<<"Error allocating memory\n";
-        exit(1);
     }
     catch(exception& err){      //given char for example
-        cerr<<"Error: Input must be a number 1-10\n";
-        exit(1);
+        cerr<<"Error: Input must be integer\n";
     }
 
     try{
@@ -344,18 +347,14 @@ int main(){
         fout << left << setw(10) << "Semester" << endl;
 
         vector<Course*> vec = sec.get_courses();
-        for (Course* course : vec) {
-            fout << left << setw(30) << course->get_name();
-            fout << left << setw(10) << course->get_ECTS();
-            fout << left << setw(15) << (course->is_mandatory() ? "Yes" : "No");
-            fout << left << setw(10) << course->get_semester() << endl;
-        }
+        for (Course* course : vec) 
+            fout<< *course;
 
         fout.close();
 
         fout.open("files/students.txt",ios::trunc);
         if(!fout.is_open())
-            throw Err_Rpt("Error opening file 'courses.txt'\n","main.cpp","364");
+            throw Err_Rpt("Error opening file 'students.txt'\n","main.cpp","360");
 
         fout << left << setw(30) << "Name";
         fout << left << setw(15) << "AM";
@@ -363,7 +362,6 @@ int main(){
         fout << left << setw(10) << "Age";
         fout << left << setw(10) << "ECTS";
         fout << left << setw(10) << "Semester" << endl;
-        fout << left << setw(30) << "Subjects and grades";
 
         vector<Person*> vec1 = sec.get_people();
         for (Person* per : vec1) {
@@ -372,21 +370,15 @@ int main(){
             Student* student;
             student = dynamic_cast<Student*>(per);
             if(!student)
-                throw Err_Rpt("Error casting to student\n","main.cpp","381");
-            fout << left << setw(30) << student->get_name() + " " + student->get_surname();
-
-            fout << left << setw(15) << student->get_AM();
-            fout << left << setw(25) << student->get_mail();
-            fout << left << setw(10) << student->get_age();
-            fout << left << setw(10) << student->get_ECTS();
-            fout << left << setw(10) << student->get_semester() << endl;
+                throw Err_Rpt("Error casting to student\n","main.cpp","376");
+            fout<<*student<<endl;
         }
 
         fout.close();
 
         fout.open("files/professors.txt",ios::trunc);
         if(!fout.is_open())
-            throw Err_Rpt("Error opening file 'courses.txt'\n","main.cpp","395");
+            throw Err_Rpt("Error opening file 'professors.txt'\n","main.cpp","384");
 
         fout << left << setw(30) << "Name";
         fout << left << setw(25) << "Mail";
@@ -396,13 +388,9 @@ int main(){
         for (Person* per : vec1) {
             if(per->get_type())
                 continue;
-
-            fout << left << setw(30) << per->get_name() + " " + per->get_surname();
-            fout << left << setw(25) << per->get_mail();
-            fout << left << setw(10) << per->get_age()<<endl;
+            fout<< *per;    //uses person's fout
         }
         return 0;
-
     }
     catch(Err_Rpt& err){
         cerr<<err.msg;

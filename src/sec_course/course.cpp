@@ -135,3 +135,11 @@ bool sem=0, bool passed=0, bool failed=0){
         set_failed(in_failed);
     }
 }
+
+ofstream& operator<<(ofstream& ofs, const Course& course){
+    ofs << setw(30) << course.get_name();
+    ofs << setw(10) << course.get_ECTS();
+    ofs << setw(15) << (course.is_mandatory() ? "Yes" : "No");
+    ofs << setw(10) << course.get_semester() << endl;    
+    return ofs;
+}
