@@ -1,5 +1,5 @@
-#include "classes.h"
-#include "funcs.h"
+#include "sec_course.h"
+#include "people.h"
 
 Secretary::Secretary(): data({}) {}
 
@@ -82,7 +82,7 @@ Person* Secretary::find(const string in_name, const string in_surname){
         if(in_name == person->get_name() &&
            in_surname == person->get_surname())
             return person;
-    throw Err_Rpt("Error: Person not found\n");
+    throw Err_Rpt("Error: Person not found\n","secretary.cpp","85");
 }
 
 //given a Person*
@@ -91,6 +91,11 @@ Person* Secretary::find(Person *person){
 }
 
 vector<Student*> Secretary::students_graduate(){
+    vector<Course*> mand_courses;
+    for(Course* course: courses)
+        if(course->is_mandatory())         //gets the mandatory ones
+            mand_courses.push_back(course);
+
     vector<Student*> degreeee;
     for(Person* person : data){
         if(!person->get_type())     //skips professors
@@ -98,8 +103,9 @@ vector<Student*> Secretary::students_graduate(){
         Student* student;
         student = dynamic_cast<Student*>(person);
         if(!student)
-            throw Err_Rpt("Error casting to student\n");
-        if(student->gets_degree())
+            throw Err_Rpt("Error casting to student\n","secretary.cpp","106");
+
+        if(student->gets_degree(mand_courses))
             degreeee.push_back(student);
     }
     return degreeee;
@@ -109,7 +115,7 @@ Secretary& Secretary::operator-=(Person* person){
     vector<Person*>::iterator check;
     check = std::find(data.begin(), data.end(), person);
     if (check == data.end())
-        throw Err_Rpt("Person not found\n");
+        throw Err_Rpt("Person not found\n","secretary.cpp","118");
     data.erase(check);
     return *this;
 }
@@ -130,7 +136,7 @@ Secretary& Secretary::operator-=(Course* course){
     vector<Course*>::iterator check;
         check = std::find(courses.begin(), courses.end(), course);
         if (check == courses.end())
-            throw Err_Rpt("Course not found\n");
+            throw Err_Rpt("Course not found\n","secretary.cpp","139");
 
     courses.erase(check);
     return *this;
@@ -140,15 +146,7 @@ Course* Secretary::find(string in_name){
     for(Course* curr : courses)
         if(in_name == curr->get_name())
             return curr;
-    throw Err_Rpt("Error: Course not found\n");
-}
-
-void Secretary::show_courses(){
-    for(Course* cour: courses){
-        cout<<cour->get_name()<<" ";
-        cout<<cour->get_ECTS()<<" ";
-        cout<<cour->is_mandatory()<<endl;
-    }
+    throw Err_Rpt("Error: Course not found\n","secretary.cpp","149");
 }
 
 void Secretary::add_courses_to_person(Course* course, Person* per){
@@ -247,7 +245,7 @@ void Secretary::create_course(){
         *this+= &course;
         return;
     }
-    cerr<<"Error: Course already exists\n";
+    cerr<<"Error: Course already exists: secretary.cpp, line 248\n";
     exit(1);
 }
 
@@ -286,6 +284,6 @@ void Secretary::create_person(bool flag){
         return;
     }
     delete per;
-    cerr<<"Error: Person already exists\n";
+    cerr<<"Error: Person already exists: secretary.cpp, line 287 \n";
     exit(1);
 }

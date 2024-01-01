@@ -1,8 +1,9 @@
 # Compiler
 CXX = g++
+INCLUDE = include
 
 # Compiler flags
-CXXFLAGS = -g -std=c++11 -Wall
+CXXFLAGS = -g -std=c++11 -Wall -I$(INCLUDE)
 
 # Source files
 SRCS =  main2.cpp person.cpp secretary.cpp student.cpp course.cpp professor.cpp funcs.cpp

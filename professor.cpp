@@ -1,4 +1,5 @@
-#include "classes.h"
+#include "people.h"
+#include "sec_course.h"
 
 Professor::Professor(): Person() {}
 
@@ -23,13 +24,19 @@ Professor& Professor::operator-=(Course* course) {
     vector<Course*>::iterator check;
     check = find(courses.begin(), courses.end(), course);
     if (check == courses.end())
-        throw Err_Rpt("Course not found\n");
+        throw Err_Rpt("Course not found\n","professor.cpp","27");
 
     courses.erase(check);
     return *this;
 }
 
 Professor* Professor::clone(){
-    Professor* pr = new Professor(*this);
+    Professor* pr;
+    try{
+        pr = new Professor(*this);
+    }
+    catch(bad_alloc& e){
+        throw;
+    }    
     return pr;
 }

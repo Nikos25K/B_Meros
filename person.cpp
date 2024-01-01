@@ -1,5 +1,5 @@
-#include "classes.h"
-#include "funcs.h"
+#include "people.h"
+#include "sec_course.h"
 
 int Person::count = 0;
 
@@ -62,7 +62,7 @@ void Person::set_mail(string in_mail){
 }
 void Person::set_age(int in_age){
     if(in_age < 18 || in_age > 80)
-        throw Err_Rpt("Error: Invalid age\n");
+        throw Err_Rpt("Error: Invalid age\n","person.cpp","65");
     age = in_age;
 }
 void Person::set_type(bool in_type){
@@ -130,13 +130,7 @@ void Person::edit(bool in_name=0, bool in_surname=0, bool in_mail=0, bool in_age
         int in_age;
         cout<<"Give the new age: ";
         cin>>in_age;
-        try{
-            set_age(in_age);
-        }
-        catch(Err_Rpt& err){
-            cerr<<err.msg;
-            exit(1);
-        }
+        set_age(in_age);
     }
 }
 
@@ -144,5 +138,12 @@ void Person::edit(bool in_name=0, bool in_surname=0,bool in_mail=0, bool in_age=
 bool in_am=0, bool in_ects=0, bool in_sem=0) {}
 
 Person* Person::clone(){
-    return new Person(*this);
+    Person* per;
+    try{
+        per = new Person(*this);
+    }
+    catch(bad_alloc& e){
+        throw;
+    }
+    return per;
 }

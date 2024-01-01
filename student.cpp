@@ -1,5 +1,5 @@
-#include "classes.h"
-#include "funcs.h"
+#include "people.h"
+#include "sec_course.h"
 
 Student::Student() : Person("", "", "", 0, ""), AM(0), ECTS(0), semester(0), subjects({}){}
 
@@ -47,7 +47,7 @@ Student& Student::operator-=(Course* course){
     map<Course*, double>::iterator check;
     check = subjects.find(course);
     if (check == subjects.end())
-        throw Err_Rpt("Course not found\n");
+        throw Err_Rpt("Course not found\n","student.cpp","50");
 
     subjects.erase(check);
     return *this;
@@ -60,17 +60,14 @@ double& Student::operator[](Course* course){
     return subjects[course];
 }
 
-bool Student::gets_degree() const{
+bool Student::gets_degree(vector<Course*> mand_courses){
 
-    if(ECTS < 240 || semester < 8)
+    if(ECTS < MIN_ECSTS || semester < MIN_SEMS)
         return false;
 
-    for (auto it = subjects.begin(); it != subjects.end(); ++it) {
-        Course* course = it->first;
-        double grade = it->second;
-        if(course->is_mandatory() && grade < 5)
+    for(Course* course: mand_courses)
+        if(!this->passed_course(course))
             return false;
-    }
 
     return true;
 }
@@ -78,7 +75,7 @@ bool Student::gets_degree() const{
 bool Student::passed_course(Course* course){
     auto check = subjects.find(course);
     if (check == subjects.end())
-        throw Err_Rpt("Course not found\n");
+        return false;
 
     return subjects[course] >= 5 ? true : false;
 }
@@ -86,7 +83,7 @@ bool Student::passed_course(Course* course){
 double Student::course_grade(Course* course){
     auto check = subjects.find(course);
     if (check == subjects.end())
-        throw Err_Rpt("Course not found\n");
+        throw Err_Rpt("Course not found\n","student.cpp","86");
     return subjects[course];
 }
 
@@ -114,7 +111,14 @@ bool in_am=0, bool in_ects=0, bool in_sem=0){
 }
 
 Student* Student::clone(){
-    return new Student(*this);
+    Student* st;
+    try{
+        st =  new Student(*this);
+    }
+    catch(bad_alloc& e){
+        throw;
+    }
+    return st;
 }
 
 void Student::show_courses(){

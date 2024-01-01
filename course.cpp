@@ -1,5 +1,5 @@
-#include "classes.h"
-#include "funcs.h"
+#include "people.h"
+#include "sec_course.h"
 
 Course::Course(): name(""), ECTS(0), mandatory(0), semester(0),
 people({}), passed(0), failed(0) {}
@@ -75,7 +75,7 @@ double Course::get_avg_grade(){
         Student* student;
         student = dynamic_cast<Student*>(per);
         if(!student)
-            throw Err_Rpt("Error casting to student\n");
+            throw Err_Rpt("Error casting to student\n","course.cpp","78");
         sum += student->course_grade(this);
     }
     if(count)
@@ -92,7 +92,7 @@ Course& Course::operator-=(Person* per){
     vector<Person*>::iterator check;
     check = find(people.begin(), people.end(), per);
     if (check == people.end())
-        throw Err_Rpt("Person not found\n");
+        throw Err_Rpt("Person not found\n","course.cpp","95");
     this->people.erase(check);
     return *this;
 }
