@@ -83,7 +83,6 @@ class Student: public Person{
         bool in_am, bool in_ects, bool in_sem) override;
 
         virtual Student* clone() override;
-        void show_courses();
 
         friend ofstream& operator<<(ofstream& ofs, const Student& student);
         friend ostream& operator<<(ostream& os, const Student& student);

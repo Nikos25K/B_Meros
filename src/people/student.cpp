@@ -121,15 +121,6 @@ Student* Student::clone(){
     return st;
 }
 
-void Student::show_courses(){
-    for (auto it = subjects.begin(); it != subjects.end(); ++it) {
-        Course* cour = it->first;
-        cout<<cour->get_name()<<" ";
-        cout<<cour->get_ECTS()<<" ";
-        cout<<cour->is_mandatory()<<endl;
-    }
-}
-
 ofstream& operator<<(ofstream& ofs, const Student& student){
     ofs<<student.name << " "<< student.surname <<" "<<student.AM<< " ";
     return ofs;
