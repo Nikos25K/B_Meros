@@ -9,7 +9,7 @@ class Person{
         string surname;
         string mail;
         int age;
-        bool type;
+        bool type;      //1 if student, 0 if professor
 
     public:
         Person();
@@ -32,12 +32,12 @@ class Person{
         void set_age(int in_age);
         void set_type(bool in_type);
 
+        virtual Person& operator+=(Course* course);
+        virtual Person& operator-=(Course* course);
+
         friend ostream &operator<<(ostream &left, Person person);
         friend ofstream &operator<<(ofstream &ofs, Person person);
         friend istream &operator>>(istream &in, Person &person);
-
-        virtual Person& operator+=(Course* course);
-        virtual Person& operator-=(Course* course);
 
         virtual void edit(bool in_name, bool in_surname, bool in_mail, bool in_age);
         virtual void edit(bool in_name, bool in_surname, bool in_mail, bool in_age,
@@ -52,7 +52,6 @@ class Student: public Person{
         int AM;
         int ECTS;
         int semester;
-        //map apo mathimata
         map<Course*, double> subjects;
 
 	public:
@@ -75,6 +74,9 @@ class Student: public Person{
         virtual Student& operator-=(Course* course) override;
         double& operator[](Course* course);
 
+        friend ofstream& operator<<(ofstream& ofs, const Student& student);
+        friend ostream& operator<<(ostream& os, const Student& student);
+
         bool passed_course(Course* course);
         double course_grade(Course* course);
 
@@ -84,9 +86,6 @@ class Student: public Person{
         bool in_am, bool in_ects, bool in_sem) override;
 
         virtual Student* clone() override;
-
-        friend ofstream& operator<<(ofstream& ofs, const Student& student);
-        friend ostream& operator<<(ostream& os, const Student& student);
 };
 
 class Professor: public Person{

@@ -16,9 +16,13 @@ class Secretary{
 
         vector<Person*> get_people();
         vector<Course*> get_courses();
-        int get_count() const;
 
         Secretary &operator=(Secretary secretary);
+
+        Secretary& operator+=(Person* person);
+        Secretary& operator-=(Person* person);
+        Secretary& operator+=(Course* course);
+        Secretary& operator-=(Course* course);
 
         friend ostream &operator<<(ostream &left, Secretary &secretary);
         friend istream &operator>>(istream &in, Secretary &secretary);
@@ -26,16 +30,9 @@ class Secretary{
         Person* find(const string in_name, const string in_surname);
         Person* find(Person person);                 //find based on different args
         Person* find(Person* person);
+        Course* find(string in_name);
 
         vector<Student*> students_graduate();
-
-        Secretary& operator+=(Person* person);
-        Secretary& operator-=(Person* person);
-
-        Secretary& operator+=(Course* course);
-        Secretary& operator-=(Course* course);
-
-        Course* find(string in_name);
 
         void add_courses_to_person(Person* person);
         void add_courses_to_person(Course* course);
@@ -62,7 +59,6 @@ class Course{
         vector<Person*> people;     //both students and profs
         int passed;
         int failed;
-        //na prosthetoume ton vathmo
 
     public:
         Course();
@@ -88,14 +84,11 @@ class Course{
 
         void set_professors(vector<Professor*> in_profs);
 
-        double get_avg_grade();
-
         Course& operator+=(Person* per);
         Course& operator-=(Person* per);
+        friend ofstream& operator<<(ofstream& ofs, const Course& course);
 
         void edit(bool name, bool ects, bool mand, bool sem, bool passed, bool failed);
-
-        friend ofstream& operator<<(ofstream& ofs, const Course& course);
 };
 
 #endif

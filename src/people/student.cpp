@@ -60,16 +60,19 @@ double& Student::operator[](Course* course){
     return subjects[course];
 }
 
-bool Student::gets_degree(vector<Course*> mand_courses){
+ofstream& operator<<(ofstream& ofs, const Student& student){
+    ofs << setw(30) << student.get_name() + " " + student.get_surname();
+    ofs << setw(15) << student.get_AM();
+    ofs << setw(25) << student.get_mail();
+    ofs << setw(10) << student.get_age();
+    ofs << setw(10) << student.get_ECTS();
+    ofs << setw(10) << student.get_semester();
+    return ofs;
+}
 
-    if(ECTS < MIN_ECSTS || semester < MIN_SEMS)
-        return false;
-
-    for(Course* course: mand_courses)
-        if(!this->passed_course(course))
-            return false;
-
-    return true;
+ostream& operator<<(ostream& os, const Student& student){
+    os<<student.name << " "<< student.surname <<" "<<student.AM<< " ";
+    return os;
 }
 
 bool Student::passed_course(Course* course){
@@ -83,13 +86,25 @@ bool Student::passed_course(Course* course){
 double Student::course_grade(Course* course){
     auto check = subjects.find(course);
     if (check == subjects.end())
-        throw Err_Rpt("Course not found\n","student.cpp","86");
+        throw Err_Rpt("Course not found\n","student.cpp","89");
     return subjects[course];
+}
+
+bool Student::gets_degree(vector<Course*> mand_courses){
+
+    if(ECTS < MIN_ECSTS || semester < MIN_SEMS)
+        return false;
+
+    for(Course* course: mand_courses)
+        if(!this->passed_course(course))
+            return false;
+
+    return true;
 }
 
 void Student::edit(bool in_name=0, bool in_surname=0, bool in_mail=0, bool in_age=0, 
 bool in_am=0, bool in_ects=0, bool in_sem=0){
-    Person::edit(in_name,in_surname,in_mail,in_age);
+    Person::edit(in_name,in_surname,in_mail,in_age);    //if any of those is true, will ask the user to give
     if(in_am){
         string temp;
         cout<<"Give the new AM: ";
@@ -122,19 +137,4 @@ Student* Student::clone(){
         throw;
     }
     return st;
-}
-
-ofstream& operator<<(ofstream& ofs, const Student& student){
-    ofs << setw(30) << student.get_name() + " " + student.get_surname();
-    ofs << setw(15) << student.get_AM();
-    ofs << setw(25) << student.get_mail();
-    ofs << setw(10) << student.get_age();
-    ofs << setw(10) << student.get_ECTS();
-    ofs << setw(10) << student.get_semester();
-    return ofs;
-}
-
-ostream& operator<<(ostream& os, const Student& student){
-    os<<student.name << " "<< student.surname <<" "<<student.AM<< " ";
-    return os;
 }

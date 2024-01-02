@@ -65,24 +65,6 @@ void Course::set_professors(vector<Professor*> in_profs){
         people.push_back(prof_ptr);
 }
 
-double Course::get_avg_grade(){
-    double sum=0.0;
-    int count=0;
-    for(Person* per: people){
-        if(!per->get_type())     //Students only
-            continue;
-        count++;
-        Student* student;
-        student = dynamic_cast<Student*>(per);
-        if(!student)
-            throw Err_Rpt("Error casting to student\n","course.cpp","78");
-        sum += student->course_grade(this);
-    }
-    if(count)
-        return sum/count;
-    return 0.0;
-}
-
 Course& Course::operator+=(Person* per){
     people.push_back(per);
     return *this;
@@ -92,13 +74,13 @@ Course& Course::operator-=(Person* per){
     vector<Person*>::iterator check;
     check = find(people.begin(), people.end(), per);
     if (check == people.end())
-        throw Err_Rpt("Person not found\n","course.cpp","95");
+        throw Err_Rpt("Person not found\n","course.cpp","77");
     this->people.erase(check);
     return *this;
 }
 
 void Course::edit(bool name=0, bool ects=0, bool mand=0,
-bool sem=0, bool passed=0, bool failed=0){
+bool sem=0, bool passed=0, bool failed=0){    //if any of those is true, will ask the user to give
     if(name){
         string in_name;
         cout<<"Give the new name"<<endl;

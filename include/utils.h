@@ -16,8 +16,9 @@
 
 using namespace std;
 
-int count_lines(string name);
-bool check_resp(bool numeric);
+int count_lines(string name);   //opens file and counts lines
+
+bool check_resp(bool numeric);  //numeric->0: expects answer y/n else expects 0/1
 
 class Course;
 class Person;
@@ -25,7 +26,7 @@ class Secretary;
 class Student;
 class Professor;
 
-class Err_Rpt{
+class Err_Rpt{      //class for exceptions
     public:
         string msg;
         string file_name;

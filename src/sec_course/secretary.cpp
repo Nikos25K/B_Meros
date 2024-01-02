@@ -1,6 +1,7 @@
 #include "sec_course.h"
 #include "people.h"
 
+
 Secretary::Secretary(): data({}) {}
 
 //in case initialized with a vec of Person*
@@ -33,9 +34,6 @@ vector<Course*> Secretary::get_courses(){
     return courses;
 }
 
-int Secretary::get_count() const{
-    return data.size();
-}
 
 Secretary& Secretary::operator+=(Person* person) {
     data.push_back(person->clone());
@@ -56,9 +54,10 @@ Secretary& Secretary::operator=(Secretary secretary){
 }
 
 ostream &operator<<(ostream &str, Secretary &secretary){
-    str<<"Containing "<<secretary.get_count()<<" members"<<endl;
+    str<<"Containing "<<secretary.data.size()<<" members"<<endl;
     for(Person* person: secretary.data)
         str<<*person;
+    
     return str;
 }
 
@@ -75,6 +74,7 @@ istream &operator>>(istream &str, Secretary &secretary){
     }
     return str;
 }
+
 
 //given a name and surname checks if inside
 Person* Secretary::find(const string in_name, const string in_surname){

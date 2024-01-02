@@ -22,7 +22,7 @@ bool check_resp(bool numeric){       //to check yes/no or 0/1
     int choice = 2;
     do{
         cin>>resp;
-        choice = std::stoi(resp);   //if exception will be handled in end of main
+        choice = std::stoi(resp);   //if exception, will be handled in end of main
     }while(choice != 1 && choice != 0);
     
     return choice;

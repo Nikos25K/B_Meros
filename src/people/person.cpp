@@ -69,6 +69,13 @@ void Person::set_type(bool in_type){
     type = in_type;
 }
 
+Person& Person::operator+=(Course* course){
+    return *this;
+}
+Person& Person::operator-=(Course* course){
+    return *this;
+}
+
 ostream &operator<<(ostream &str, Person person){
     str<<"------------------"<<endl;
     str<<"Name: "<<person.name <<" "<<person.surname<<endl;
@@ -105,13 +112,6 @@ istream &operator>>(istream &str, Person &person){
     str>>person.type;
 
     return str;
-}
-
-Person& Person::operator+=(Course* course){
-    return *this;
-}
-Person& Person::operator-=(Course* course){
-    return *this;
 }
 
 void Person::edit(bool in_name=0, bool in_surname=0, bool in_mail=0, bool in_age=0){
