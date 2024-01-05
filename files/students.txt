@@ -1,3 +1,3 @@
 Name                          AM             Mail                     Age       ECTS      Semester  
-Triantafyllia Papadoggiani    2200133        mail@gmail.com           19        239       3         Data_Structures 7 Applied_Maths 8
+Triantafyllia Papadogianni    2200133        mail@gmail.com           19        239       3         Data_Structures 7 Applied_Maths 8
 Nikolaos Kyriakakos           2200083        mail2@gmail.com          20        238       3         Data_Structures 8 Applied_Maths 7
