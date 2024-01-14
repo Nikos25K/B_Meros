@@ -105,6 +105,10 @@ int main(){
         cerr<<"Error occured in " + err.file_name + " in line "+ err.line<<"\n";
         exit(1);
     }
+    catch(...){
+        cerr<<"An exception occurred\n";
+        exit(1);
+    }
 
     int choice=0;
     ofstream fout;
@@ -339,7 +343,11 @@ int main(){
     catch(exception& err){      //given char for example
         cerr<<"Error: Input must be integer\n";
     }
-
+    catch(...){
+        cerr<<"An exception occurred\n";
+        exit(1);
+    }
+    
     try{
         fout.open("files/courses.txt",ios::trunc);
         if(!fout.is_open())
@@ -399,6 +407,10 @@ int main(){
     catch(Err_Rpt& err){
         cerr<<err.msg;
         cerr<<"Error occured in " + err.file_name + " in line "+ err.line<<"\n";
+        exit(1);
+    }
+    catch(...){
+        cerr<<"An exception occurred\n";
         exit(1);
     }
 }
