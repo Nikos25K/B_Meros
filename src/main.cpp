@@ -143,13 +143,13 @@ int main(){
                 Person* person;
                 cin>>x;
                 if(x != "add" && x != "edit" && x != "delete")
-                    throw Err_Rpt("Error: Not valid option(add/edit/delete)\n","main.cpp","142");
+                    throw Err_Rpt("Error: Not valid option(add/edit/delete)\n","main.cpp","146");
                 if(x != "add"){
                         person =sec.get_person("","");     //reads
                     if(person->get_type() && choice == 1)
-                        throw Err_Rpt("Error: Person given is Student\n","main.cpp","146");
+                        throw Err_Rpt("Error: Person given is Student\n","main.cpp","150");
                     else if(!person->get_type() && choice == 2)
-                        throw Err_Rpt("Error: Person given is Professor\n","main.cpp","148");
+                        throw Err_Rpt("Error: Person given is Professor\n","main.cpp","152");
                 }
                 else if (x == "add" && choice == 1)      //create prof
                     sec.create_person(0);
@@ -194,7 +194,7 @@ int main(){
                 Course* course;
                 cin>>x;
                 if(x != "add" && x != "edit" && x != "delete")
-                    throw Err_Rpt("Error: Not valid option(add/edit/delete)\n","main.cpp","193");
+                    throw Err_Rpt("Error: Not valid option(add/edit/delete)\n","main.cpp","197");
                 if(x != "add")
                     course =sec.get_course("");     //reads
                 if (x == "add")
@@ -232,9 +232,9 @@ int main(){
                 Course* course = sec.get_course("");
                 Person* p = sec.get_person("","");
                 if(p->get_type() && choice == 4)
-                    throw Err_Rpt("Error: Person given is Student\n","main.cpp","231");                                    
+                    throw Err_Rpt("Error: Person given is Student\n","main.cpp","235");                                    
                 else if(!p->get_type() && choice == 5)
-                    throw Err_Rpt("Error: Person given is Professor\n","main.cpp","233");                                    
+                    throw Err_Rpt("Error: Person given is Professor\n","main.cpp","237");                                    
 
                 while(1){
                     sec.add_courses_to_person(course, p);
@@ -246,7 +246,7 @@ int main(){
                     if(choice == 4){     //set profs
                         p = sec.get_person("","");
                         if(p->get_type())
-                            throw Err_Rpt("Error: Person given is Student\n","main.cpp","245");
+                            throw Err_Rpt("Error: Person given is Student\n","main.cpp","249");
                     }
                     else                //add another course to student
                         course = sec.get_course("");
@@ -259,7 +259,7 @@ int main(){
 
                 fout.open(file_to_open);
                 if(!fout.is_open())
-                    throw Err_Rpt("Error opening file to write results\n","main.cpp","258");
+                    throw Err_Rpt("Error opening file to write results\n","main.cpp","262");
                 fout << left << setw(30) << "Name";
                 fout << left << setw(15) << "AM";
                 fout << left << setw(25) << "Mail";
@@ -272,7 +272,7 @@ int main(){
                         continue;
                     Student* student = dynamic_cast<Student*>(per);
                     if(!student)
-                        throw Err_Rpt("Error casting to student\n","main.cpp","271");
+                        throw Err_Rpt("Error casting to student\n","main.cpp","275");
                     if(student->passed_course(course)){
                         fout << *student;           //prints in file
                         fout << left << setw(10) <<student->course_grade(course) << endl;
@@ -283,12 +283,12 @@ int main(){
             else if (choice == 7){
                 Person* p = sec.get_person("","");
                 if(p->get_type())
-                    throw Err_Rpt("Error: Person given is Student\n","main.cpp","282");
+                    throw Err_Rpt("Error: Person given is Student\n","main.cpp","286");
 
                 Professor* prof;
                 prof = dynamic_cast<Professor*>(p);
                 if(!prof)
-                    throw Err_Rpt("Error casting to professor\n","main.cpp","287");
+                    throw Err_Rpt("Error casting to professor\n","main.cpp","291");
                 vector<Course*> vec = prof->get_courses();
                 for(Course* course : vec){
                     cout<<"Course: "<<course->get_name()<<endl;     //prints in stdout
@@ -298,12 +298,12 @@ int main(){
             else if (choice == 8){
                 Person* p = sec.get_person("","");
                 if(!p->get_type())
-                    throw Err_Rpt("Error: Person given is Professor\n","main.cpp","297");
+                    throw Err_Rpt("Error: Person given is Professor\n","main.cpp","301");
 
                 Student* student;
                 student = dynamic_cast<Student*>(p);
                 if(!student)
-                    throw Err_Rpt("Error casting to student\n","main.cpp","302");
+                    throw Err_Rpt("Error casting to student\n","main.cpp","306");
                 cout<< student->get_AM()<<endl;
                 map<Course*, double> m = student->get_map();
                 int curr = student->get_semester();
@@ -351,7 +351,7 @@ int main(){
     try{
         fout.open("files/courses.txt",ios::trunc);
         if(!fout.is_open())
-            throw Err_Rpt("Error opening file 'courses.txt'\n","main.cpp","346");
+            throw Err_Rpt("Error opening file 'courses.txt'\n","main.cpp","354");
 
         fout << left << setw(30) << "Name";
         fout << left << setw(10) << "ECTS";
@@ -366,7 +366,7 @@ int main(){
 
         fout.open("files/students.txt",ios::trunc);
         if(!fout.is_open())
-            throw Err_Rpt("Error opening file 'students.txt'\n","main.cpp","361");
+            throw Err_Rpt("Error opening file 'students.txt'\n","main.cpp","369");
 
         fout << left << setw(30) << "Name";
         fout << left << setw(15) << "AM";
@@ -382,7 +382,7 @@ int main(){
             Student* student;
             student = dynamic_cast<Student*>(per);
             if(!student)
-                throw Err_Rpt("Error casting to student\n","main.cpp","377");
+                throw Err_Rpt("Error casting to student\n","main.cpp","385");
             fout<<*student<<endl;
         }
 
@@ -390,7 +390,7 @@ int main(){
 
         fout.open("files/professors.txt",ios::trunc);
         if(!fout.is_open())
-            throw Err_Rpt("Error opening file 'professors.txt'\n","main.cpp","385");
+            throw Err_Rpt("Error opening file 'professors.txt'\n","main.cpp","393");
 
         fout << left << setw(30) << "Name";
         fout << left << setw(25) << "Mail";
